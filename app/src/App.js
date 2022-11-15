@@ -10,7 +10,8 @@ function App() {
   useEffect(() => {
     axios.get('/api')
       .then(({ data }) => {
-        setMessage(data.message);
+        console.log(data)
+        setMessage(data.movies.length);
       })
       .catch((error) => {
         console.error(error)
