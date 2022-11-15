@@ -18,5 +18,5 @@ services:
     image: node:18.12.1
     volumes:
     - .:/ws
-    working_dir: /ws
     entrypoint: bash -c "tail -f"
+    working_dir: /ws/api
