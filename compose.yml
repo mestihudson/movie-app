@@ -10,6 +10,9 @@ services:
     ports:
     - 14000:3000
     entrypoint: bash -c "npm start"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
     image: node:18.12.1
     volumes:
     - .:/ws
