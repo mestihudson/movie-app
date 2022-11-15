@@ -2,7 +2,7 @@ name: push-to-ec2
 on:
   push:
     branches:
-    - '*'
+    - '*/*'
 
 jobs:
   deploy:
