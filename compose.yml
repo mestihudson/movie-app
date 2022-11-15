@@ -9,6 +9,7 @@ services:
     restart: always
     ports:
     - 14000:3000
+    entrypoint: bash -c "npm start"
     image: node:18.12.1
     volumes:
     - .:/ws
