@@ -20,3 +20,5 @@ services:
     - .:/ws
     working_dir: /ws/api
     entrypoint: bash -c "npm start"
+    ports:
+    - 15000:3000
