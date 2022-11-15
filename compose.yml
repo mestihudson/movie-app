@@ -6,6 +6,7 @@ services:
     volumes:
     - .:/ws
     working_dir: /ws/app
+    restart: always
     image: node:18.12.1
     volumes:
     - .:/ws
