@@ -22,3 +22,5 @@ services:
     entrypoint: bash -c "npm start"
     ports:
     - 15000:3000
+    environment:
+      PORT: 3000
