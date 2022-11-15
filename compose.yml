@@ -7,6 +7,8 @@ services:
     - .:/ws
     working_dir: /ws/app
     restart: always
+    ports:
+    - 14000:3000
     image: node:18.12.1
     volumes:
     - .:/ws
