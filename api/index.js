@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 
 app.get("/", (req, res) => {
-  return res.json({ success: true })
+  return res.json({ message: 'success' })
 })
 
 app.listen(process.env.PORT, () => {
