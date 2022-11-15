@@ -25,3 +25,13 @@ services:
     environment:
       PORT: 3000
     restart: always
+
+  db:
+    image: postgres:15.1-alpine3.16
+    restart: always
+    volumes:
+    - .:/ws
+    ports:
+    - 5432
+    environment:
+      POSTGRES_PASSWORD: postgres12345678
