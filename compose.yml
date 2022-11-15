@@ -9,7 +9,7 @@ services:
     restart: always
     ports:
     - 14000:3000
-    entrypoint: bash -c "npm start"
+    entrypoint: bash -c "npm install && npm start"
     environment:
       PORT: 3000
       HOST: 0.0.0.0
@@ -19,7 +19,7 @@ services:
     volumes:
     - .:/ws
     working_dir: /ws/api
-    entrypoint: bash -c "npm start"
+    entrypoint: bash -c "npm install && npm start"
     ports:
     - 15000:3000
     environment:
