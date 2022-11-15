@@ -6,14 +6,14 @@ on:
 
 jobs:
   deploy:
-    name: deploy to ec2
+    name: deploy-to-ec2
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout files
+    - name: checkout-files
       uses: actions/checkout@v3
 
-    - name: copy files with ssh
+    - name: copy-files-with-ssh
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
