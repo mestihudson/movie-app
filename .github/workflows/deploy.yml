@@ -18,8 +18,16 @@ jobs:
         node-version: '18.12.1'
     - name: build-app
       run: (cd app && npm ci && npm run build --if-present)
+    - name: keep-app-files
+      uses: actions/upload-artifact@v3
+      with:
+        path: app/build
     - name: build-api
-      run: (cd app && npm ci && npm run build --if-present)
+      run: (cd api && npm ci && npm run build --if-present)
+    - name: keep-app-files
+      uses: actions/upload-artifact@v3
+      with:
+        path: api/build
 
   deploy:
     needs: build
