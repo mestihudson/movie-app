@@ -6,20 +6,41 @@ on:
     - main
 
 jobs:
-  deploy:
-    name: deploy-to-ec2
+  build:
+    name: build-modules
     runs-on: ubuntu-latest
-
     steps:
     - name: checkout-files
       uses: actions/checkout@v3
+    - name: setup-node-build-env
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.12.1'
+    - name: build-app
+      run: (cd app && npm ci && npm run build --if-present)
+    - name: build-api
+      run: (cd app && npm ci && npm run build --if-present)
 
-    - name: copy-files-with-ssh
+  deploy:
+    name: deploy-to-ec2
+    runs-on: ubuntu-latest
+    steps:
+    - name: copy-app-files
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        SOURCE: "./"
+        SOURCE: "./app/build"
         REMOTE_HOST: "ec2-44-212-44-166.compute-1.amazonaws.com"
         REMOTE_USER: "ubuntu"
-        TARGET: "/home/ubuntu"
+        TARGET: "/home/ubuntu/movie/app"
         EXCLUDE: "/.git/, /.github/"
+    - name: copy-api-files
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        SOURCE: "./api/build"
+        REMOTE_HOST: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        REMOTE_USER: "ubuntu"
+        TARGET: "/home/ubuntu/movie/api"
+        EXCLUDE: "/.git/, /.github/"
+
