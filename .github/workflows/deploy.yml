@@ -10,46 +10,72 @@ jobs:
     name: build-modules
     runs-on: ubuntu-latest
     steps:
-    - name: checkout-files
+    - name: checking-out-files
       uses: actions/checkout@v3
-    - name: setup-node-build-env
+    - name: setting-up-node-env
       uses: actions/setup-node@v3
       with:
         node-version: '18.12.1'
-    - name: build-app
-      run: (cd app && npm ci && npm run build --if-present)
-    - name: keep-app-files
-      uses: actions/upload-artifact@v3
-      with:
-        path: app/build
-    - name: build-api
-      run: (cd api && npm ci && npm run build --if-present)
-    - name: keep-app-files
-      uses: actions/upload-artifact@v3
-      with:
-        path: api/build
 
-  deploy:
+    - name: building-app
+      run: |
+        cd app
+        npm ci
+        npm run build --if-present
+    - name: creating-app-deployment-artifact
+      env:
+        GITHUB_SHA: ${{ github.sha }}
+      run: tar -czf app."${GITHUB_SHA}".tar.gz app/build
+    - name: uploading-app-deployment-artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: app-build
+        path: app.${{ github.sha }}.tar.gz
+
+    - name: building-api
+      run: |
+        cd api
+        npm ci
+        npm run build --if-present
+    - name: creating-app-deployment-artifact
+      env:
+        GITHUB_SHA: ${{ github.sha }}
+      run: tar -czf api."${GITHUB_SHA}".tar.gz api/build
+    - name: uploading-api-deployment-artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-build
+        path: api.${{ github.sha }}.tar.gz
+
+  prepare-release:
     needs: build
     name: deploy-to-ec2
     runs-on: ubuntu-latest
     steps:
-    - name: copy-app-files
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        SOURCE: "./app/build"
-        REMOTE_HOST: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        REMOTE_USER: "ubuntu"
-        TARGET: "/home/ubuntu/movie/app"
-        EXCLUDE: "/.git/, /.github/"
-    - name: copy-api-files
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        SOURCE: "./api/build"
-        REMOTE_HOST: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        REMOTE_USER: "ubuntu"
-        TARGET: "/home/ubuntu/movie/api"
-        EXCLUDE: "/.git/, /.github/"
+    - name: downloading-app-deployment-artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: app-build
+    - name: coping-app-deployment-artifact-to-server
+      uses: appleboy/scp-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        source: app.${{ github.sha }}.tar.gz
+        target: /tmp/
+    - name: downloading-api-deployment-artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: api-build
+    - name: coping-api-deployment-artifact-to-server
+      uses: appleboy/scp-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        source: api.${{ github.sha }}.tar.gz
+        target: /tmp/
 
