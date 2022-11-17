@@ -25,7 +25,7 @@ jobs:
         GITHUB_SHA: ${{ github.sha }}
       run: |
         cd app/build
-        tar -cvzf ../../app."${GITHUB_SHA}".tar.gz
+        tar -cvzf ../../app."${GITHUB_SHA}".tar.gz ./
     - name: uploading-app-deployment-artifact
       uses: actions/upload-artifact@v3
       with:
@@ -42,7 +42,7 @@ jobs:
         GITHUB_SHA: ${{ github.sha }}
       run: |
         cd api/build
-        tar -cvzf ../../api."${GITHUB_SHA}".tar.gz api/build
+        tar -cvzf ../../api."${GITHUB_SHA}".tar.gz ./
     - name: uploading-api-deployment-artifact
       uses: actions/upload-artifact@v3
       with:
