@@ -1,4 +1,3 @@
-name: push-to-ec2
 on:
   push:
     branches:
@@ -7,7 +6,6 @@ on:
 
 jobs:
   build:
-    name: build-modules
     runs-on: ubuntu-latest
     steps:
     - name: checking-out-files
@@ -49,7 +47,6 @@ jobs:
 
   prepare-release:
     needs: build
-    name: deploy-to-ec2
     runs-on: ubuntu-latest
     steps:
     - name: downloading-app-deployment-artifact
