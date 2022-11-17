@@ -75,4 +75,24 @@ jobs:
         port: 22
         source: api.${{ github.sha }}.tar.gz
         target: /tmp/
+    - name: extracting-app-deployment-artifact-on-server
+      uses: appleboy/ssh-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          mkdir -p /home/ubuntu/releases/app/${{ github.sha }}
+          tar -xvf /tmp/app.${{ github.sha }}.tar.gz -C /home/ubuntu/releases/app/${{ github.sha }}
+    - name: extracting-api-deployment-artifact-on-server
+      uses: appleboy/ssh-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          mkdir -p /home/ubuntu/releases/api/${{ github.sha }}
+          tar -xvf /tmp/api.${{ github.sha }}.tar.gz -C /home/ubuntu/releases/api/${{ github.sha }}
 
