@@ -126,7 +126,8 @@ jobs:
           source /home/ubuntu/movie/api/.env
           cd /home/ubuntu/movie/api/current
           pm2 delete all
-          pm2 start index.js --name "api.".${{ github.sha }}
+          npm ci
+          pm2 start index.js --name "api.release."${{ github.sha }}
 
   clean:
     needs: deploy
