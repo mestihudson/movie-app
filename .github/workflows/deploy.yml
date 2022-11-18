@@ -102,3 +102,29 @@ jobs:
           mkdir -p /home/ubuntu/releases/api/${{ github.sha }}
           tar -xvf /tmp/api.${{ github.sha }}.tar.gz -C /home/ubuntu/releases/api/${{ github.sha }}
 
+  release:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: releasing-app
+      uses: appleboy/ssh-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: ln -sfn /home/ubuntu/releases/app/${{ github.sha }} /home/ubuntu/movie/app/current
+    - name: releasing-api
+      uses: appleboy/ssh-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          ln -sfn /home/ubuntu/releases/api/${{ github.sha }} /home/ubuntu/movie/api/current
+          source /home/ubuntu/movie/api/.env
+          cd /home/ubuntu/movie/api/current
+          pm2 delete all
+          pm2 start index.js --name "api"
+
