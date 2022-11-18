@@ -31,6 +31,7 @@ jobs:
       with:
         name: app-build
         path: app.${{ github.sha }}.tar.gz
+        retention-days: 1
 
     - name: building-api
       run: |
@@ -48,6 +49,7 @@ jobs:
       with:
         name: api-build
         path: api.${{ github.sha }}.tar.gz
+        retention-days: 1
 
   prepare-release:
     needs: build
