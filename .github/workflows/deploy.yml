@@ -123,8 +123,8 @@ jobs:
         port: 22
         script: |
           ln -sfn /home/ubuntu/releases/api/${{ github.sha }} /home/ubuntu/movie/api/current
-          export $(cat /home/ubuntu/movie/api/.env | xargs)
           cd /home/ubuntu/movie/api/current
+          export
           pm2 delete all
           npm ci
           pm2 start index.js --name "api.release."${{ github.sha }}
