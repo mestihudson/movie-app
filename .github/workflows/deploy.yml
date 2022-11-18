@@ -51,7 +51,7 @@ jobs:
         path: api.${{ github.sha }}.tar.gz
         retention-days: 1
 
-  prepare-release:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
