@@ -132,12 +132,16 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-    - name: cleaning-app
-      run: |
-        rm -frv /tmp/app.*
-        cd /home/ubuntu/releases/app && ls -t -1 | tail -n +6 | xargs rm -rf
-    - name: cleaning-api
-      run: |
-        rm -frv /tmp/api.*
-        cd /home/ubuntu/releases/api && ls -t -1 | tail -n +6 | xargs rm -rf
+    - name: cleaning-modules
+      uses: appleboy/ssh-action@master
+      with:
+        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
+        username: "ubuntu"
+        key: ${{ secrets.EC2_SSH_KEY }}
+        port: 22
+        script: |
+          rm -frv /tmp/app.*
+          rm -frv /tmp/api.*
+          (cd /home/ubuntu/releases/app && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /home/ubuntu/releases/api && ls -t -1 | tail -n +6 | xargs rm -rf)
 
