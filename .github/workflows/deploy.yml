@@ -132,10 +132,12 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-    - name: cleaning
+    - name: cleaning-app
       run: |
         rm -frv /tmp/app.*
+        cd /home/ubuntu/releases/app && ls -t -1 | tail -n +6 | xargs rm -rf
+    - name: cleaning-api
+      run: |
         rm -frv /tmp/api.*
-        (cd /home/ubuntu/releases/app && ls -t -1 | tail -n +6 | xargs rm -rf)
-        (cd /home/ubuntu/releases/api && ls -t -1 | tail -n +6 | xargs rm -rf)
+        cd /home/ubuntu/releases/api && ls -t -1 | tail -n +6 | xargs rm -rf
 
