@@ -86,8 +86,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          mkdir -p /home/ubuntu/releases/app/${{ github.sha }}
-          tar -xvf /tmp/app.${{ github.sha }}.tar.gz -C /home/ubuntu/releases/app/${{ github.sha }}
+          mkdir -p /opt/projects/movie/app/releases/${{ github.sha }}
+          tar -xvf /tmp/app.${{ github.sha }}.tar.gz -C /opt/projects/movie/app/releases/${{ github.sha }}
     - name: extracting-api-deployment-artifact-on-server
       uses: appleboy/ssh-action@master
       with:
@@ -96,8 +96,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          mkdir -p /home/ubuntu/releases/api/${{ github.sha }}
-          tar -xvf /tmp/api.${{ github.sha }}.tar.gz -C /home/ubuntu/releases/api/${{ github.sha }}
+          mkdir -p /opt/projects/movie/api/releases/${{ github.sha }}
+          tar -xvf /tmp/api.${{ github.sha }}.tar.gz -C /opt/projects/movie/api/releases/${{ github.sha }}
 
   release:
     needs: deploy
@@ -110,7 +110,7 @@ jobs:
         username: "ubuntu"
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
-        script: ln -sfn /home/ubuntu/releases/app/${{ github.sha }} /home/ubuntu/movie/app/current
+        script: ln -sfn /opt/projects/movie/app/releases/${{ github.sha }} /opt/projects/movie/app/current
     - name: releasing-api
       uses: appleboy/ssh-action@master
       with:
@@ -119,9 +119,8 @@ jobs:
         key: ${{ secrets.EC2_SSH_KEY }}
         port: 22
         script: |
-          ln -sfn /home/ubuntu/releases/api/${{ github.sha }} /home/ubuntu/movie/api/current
-          cd /home/ubuntu/movie/api/current
-          export
+          ln -sfn /opt/projects/movie/api/releases/${{ github.sha }} /opt/projects/movie/api/current
+          cd /opt/projects/movie/api/current
           pm2 delete all
           npm ci
           pm2 start index.js --name "api.release."${{ github.sha }}
@@ -140,6 +139,6 @@ jobs:
         script: |
           rm -frv /tmp/app.*
           rm -frv /tmp/api.*
-          (cd /home/ubuntu/releases/app && ls -t -1 | tail -n +6 | xargs rm -rf)
-          (cd /home/ubuntu/releases/api && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /opt/projects/app/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /opt/projects/api/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
 
