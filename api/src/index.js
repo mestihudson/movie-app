@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '/opt/projects/movie/api/.env' })
 const environment = process.env.NODE_ENV || 'development'
 const express = require('express')
 const app = express()
