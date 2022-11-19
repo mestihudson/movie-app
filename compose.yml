@@ -18,16 +18,11 @@ services:
     image: node:18.12.1
     volumes:
     - .:/ws
+    - ./api/.env:/opt/projects/movie/api/.env
     working_dir: /ws/api
     entrypoint: bash -c "npm install && npm start"
     ports:
     - 15000:3000
-    environment:
-      PORT: 3000
-      DB_HOST: db
-      DB_USER: postgres
-      DB_PASSWORD: postgres12345678
-      DB_NAME: postgres
     restart: always
 
   db:
