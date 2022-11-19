@@ -139,6 +139,6 @@ jobs:
         script: |
           rm -frv /tmp/app.*
           rm -frv /tmp/api.*
-          (cd /opt/projects/app/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
-          (cd /opt/projects/api/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /opt/projects/movie/app/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /opt/projects/movie/api/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
 
