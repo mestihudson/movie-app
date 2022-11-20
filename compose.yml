@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  app:
+    image: node:18.12.1
+    volumes:
+    - .:/ws
+    working_dir: /ws/app
+    restart: always
+    ports:
+    - 14000:3000
+    entrypoint: bash -c "npm install && npm start"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+
+  api:
+    image: node:18.12.1
+    volumes:
+    - .:/ws
+    - ./api/.env:/opt/projects/movie/api/.env
+    working_dir: /ws/api
+    entrypoint: bash -c "npm install && npm start"
+    ports:
+    - 15000:3000
+    restart: always
+
+  db:
+    image: postgres:15.1-alpine3.16
+    restart: always
+    volumes:
+    - .:/ws
+    ports:
+    - 5432
+    environment:
+      POSTGRES_PASSWORD: postgres12345678
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 15432:8080
