@@ -3,3 +3,4 @@ build
 .env
 videos
 screenshots
+nohup.out
