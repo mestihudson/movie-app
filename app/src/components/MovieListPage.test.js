@@ -29,7 +29,7 @@ describe('components/MovieListPage', () => {
     async () => {
     renderMovieListPage()
 
-    await waitFor(() => expect(screen.queryAllByTestId('movie').length).toBe(1))
+    await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(1))
   })
 
   it('should call update base service when update button has clicked', async () => {
