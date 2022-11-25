@@ -22,7 +22,7 @@ describe('components/MovieListPage', () => {
 
     renderMovieListPage({ retrieveMoviesServiceMock })
 
-    await waitFor(() => expect(retrieveMoviesServiceMock).toHaveBeenCalled())
+    await waitFor(() => expect(retrieveMoviesServiceMock).toHaveBeenCalledTimes(1))
   })
 
   it('should populate collection when retrieve movies service ends on successful',
@@ -38,6 +38,6 @@ describe('components/MovieListPage', () => {
     renderMovieListPage({ updateBaseServiceMock })
     fireEvent.click(screen.getByTestId('update-movie-base'))
 
-    await waitFor(() => expect(updateBaseServiceMock).toHaveBeenCalled())
+    await waitFor(() => expect(updateBaseServiceMock).toHaveBeenCalledTimes(1))
   })
 })
