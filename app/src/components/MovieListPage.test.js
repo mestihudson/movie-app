@@ -33,7 +33,8 @@ describe('components/MovieListPage', () => {
     await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(1))
   })
 
-  it('should call update base service when update button has clicked', async () => {
+  it('should call update base service when update button has clicked',
+    async () => {
     const updateBaseServiceMock = jest.fn()
       .mockImplementation(() => Promise.resolve())
 
