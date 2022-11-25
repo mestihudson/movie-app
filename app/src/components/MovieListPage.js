@@ -4,13 +4,20 @@ export default function MovieListPage({
   retrieveMoviesService, updateBaseService }) {
   const [collection, setCollection] = useState([])
 
-  useEffect(() => {
+  const retrieveMovies = () => {
     retrieveMoviesService()
       .then((movies) => setCollection(movies))
+  }
+
+  useEffect(() => {
+    retrieveMovies()
   }, [])
 
   const onButtonClick = () => {
     updateBaseService()
+      .then(() => {
+        retrieveMovies()
+      })
   }
 
   return (
