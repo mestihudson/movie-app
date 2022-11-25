@@ -35,6 +35,7 @@ describe('components/MovieListPage', () => {
 
   it('should call update base service when update button has clicked', async () => {
     const updateBaseServiceMock = jest.fn()
+      .mockImplementation(() => Promise.resolve())
 
     renderMovieListPage({ updateBaseServiceMock })
     fireEvent.click(screen.getByTestId('update-movie-base'))
