@@ -83,4 +83,17 @@ describe('components/MovieListPage', () => {
         .toHaveLength(0)
     )
   })
+
+  it('should show error alert message when retrieve movies service ends on fail',
+    async () => {
+    const retrieveMoviesServiceMock = jest.fn()
+      .mockImplementation(() => Promise.reject())
+
+    renderMovieListPage({ retrieveMoviesServiceMock })
+
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('error-alert-message'))
+        .toHaveLength(1)
+    )
+  })
 })
