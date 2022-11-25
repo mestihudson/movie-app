@@ -74,4 +74,13 @@ describe('components/MovieListPage', () => {
         .toHaveLength(1)
     )
   })
+
+  it('should not show empty message when collection is not empty', async () => {
+    renderMovieListPage()
+
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('empty-movie-list-message'))
+        .toHaveLength(0)
+    )
+  })
 })
