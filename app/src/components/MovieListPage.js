@@ -28,6 +28,11 @@ export default function MovieListPage({
           collection.map((e, i) => <li key={i} data-testid='movie'>{e}</li>)
         }
       </ul>
+      {
+        !collection.length &&
+          <span data-testid='empty-movie-list-message'
+          >Sorry, there is no movie to show!</span>
+      }
       <button onClick={onButtonClick} data-testid='update-movie-base'
       >Atualizar</button>
     </>
