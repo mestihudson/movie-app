@@ -1,12 +1,18 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import MovieListPage from './MovieListPage'
 
 const renderMovieListPage = ({
     retrieveMoviesServiceMock = jest.fn()
-      .mockImplementation(() => Promise.resolve([1]))
+      .mockImplementation(() => Promise.resolve([1])),
+    updateBaseServiceMock = jest.fn()
   } = {}) => {
-  render(<MovieListPage retrieveMoviesService={retrieveMoviesServiceMock}/>)
+  render(
+    <MovieListPage
+      retrieveMoviesService={retrieveMoviesServiceMock}
+      updateBaseService={updateBaseServiceMock}
+    />
+  )
 }
 
 describe('components/MovieListPage', () => {
@@ -24,5 +30,14 @@ describe('components/MovieListPage', () => {
     renderMovieListPage()
 
     await waitFor(() => expect(screen.queryAllByTestId('movie').length).toBe(1))
+  })
+
+  it('should call update base service when update button has clicked', async () => {
+    const updateBaseServiceMock = jest.fn()
+
+    renderMovieListPage({ updateBaseServiceMock })
+    fireEvent.click(screen.getByTestId('update-movie-base'))
+
+    await waitFor(() => expect(updateBaseServiceMock).toHaveBeenCalled())
   })
 })
