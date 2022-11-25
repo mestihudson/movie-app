@@ -3,10 +3,16 @@ import { useEffect, useState } from 'react'
 export default function MovieListPage({
   retrieveMoviesService, updateBaseService }) {
   const [collection, setCollection] = useState([])
+  const [errorAlertMessage, setErrorAlertMessage] = useState('')
+  const [showErrorAlertMessage, setShowErrorAlertMessage] = useState(false)
 
   const retrieveMovies = () => {
     retrieveMoviesService()
       .then((movies) => setCollection(movies))
+      .catch((error) => {
+        setErrorAlertMessage('Sorry, it was not possible to retrieve movies to show')
+        setShowErrorAlertMessage(true)
+      })
   }
 
   useEffect(() => {
@@ -35,6 +41,10 @@ export default function MovieListPage({
       }
       <button onClick={onButtonClick} data-testid='update-movie-base'
       >Atualizar</button>
+      {
+        showErrorAlertMessage &&
+          <span data-testid='error-alert-message'>{errorAlertMessage}</span>
+      }
     </>
   )
 }
