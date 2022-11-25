@@ -6,6 +6,7 @@ const renderMovieListPage = ({
     retrieveMoviesServiceMock = jest.fn()
       .mockImplementation(() => Promise.resolve([1])),
     updateBaseServiceMock = jest.fn()
+      .mockImplementation(() => Promise.resolve())
   } = {}) => {
   render(
     <MovieListPage
@@ -39,5 +40,16 @@ describe('components/MovieListPage', () => {
     fireEvent.click(screen.getByTestId('update-movie-base'))
 
     await waitFor(() => expect(updateBaseServiceMock).toHaveBeenCalledTimes(1))
+  })
+
+  it('should call retrieve movies service when update base service ends on successful',
+    async () => {
+    const retrieveMoviesServiceMock = jest.fn()
+      .mockImplementation(() => Promise.resolve([1]))
+
+    renderMovieListPage({ retrieveMoviesServiceMock })
+    fireEvent.click(screen.getByTestId('update-movie-base'))
+
+    await waitFor(() => expect(retrieveMoviesServiceMock).toHaveBeenCalledTimes(2))
   })
 })
