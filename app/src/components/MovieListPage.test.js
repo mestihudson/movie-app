@@ -26,8 +26,7 @@ describe('components/MovieListPage', () => {
     await waitFor(() => expect(retrieveMoviesServiceMock).toHaveBeenCalledTimes(1))
   })
 
-  it('should populate collection when retrieve movies service ends on successful',
-    async () => {
+  it('should show list of movies when collection is not empty', async () => {
     renderMovieListPage()
 
     await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(1))
