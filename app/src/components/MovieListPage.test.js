@@ -62,4 +62,16 @@ describe('components/MovieListPage', () => {
 
     await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(0))
   })
+
+  it('should show empty message when collection is empty', async () => {
+    const retrieveMoviesServiceMock = jest.fn()
+      .mockImplementation(() => Promise.resolve([]))
+
+    renderMovieListPage({ retrieveMoviesServiceMock })
+
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('empty-movie-list-message'))
+        .toHaveLength(1)
+    )
+  })
 })
