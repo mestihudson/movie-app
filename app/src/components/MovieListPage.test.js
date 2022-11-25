@@ -53,4 +53,13 @@ describe('components/MovieListPage', () => {
 
     await waitFor(() => expect(retrieveMoviesServiceMock).toHaveBeenCalledTimes(2))
   })
+
+  it('should not show list of movies when collection is empty', async () => {
+    const retrieveMoviesServiceMock = jest.fn()
+      .mockImplementation(() => Promise.resolve([]))
+
+    renderMovieListPage({ retrieveMoviesServiceMock })
+
+    await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(0))
+  })
 })
