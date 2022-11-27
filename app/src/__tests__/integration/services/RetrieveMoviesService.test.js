@@ -1,9 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import { rest } from 'msw'
 
 import MovieListPage from '../../../components/MovieListPage'
 import { retrieveMoviesService } from '../../../services/RetrieveMoviesService'
-import { server } from '../mocks/server'
+import { rest, server } from '../mocks/server'
 
 it('should retrieve movies from api', async () => {
   server.use(
