@@ -96,4 +96,17 @@ describe('components/MovieListPage', () => {
         .toHaveLength(1)
     )
   })
+
+  it('should show error alert message when update base service ends on fail',
+    async () => {
+    const updateBaseServiceMock = jest.fn().mockRejectedValue({})
+
+    renderMovieListPage({ updateBaseServiceMock })
+    fireEvent.click(screen.getByTestId('update-movie-base'))
+
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('error-alert-message'))
+        .toHaveLength(1)
+    )
+  })
 })
