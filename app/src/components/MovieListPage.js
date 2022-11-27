@@ -24,6 +24,10 @@ export default function MovieListPage({
       .then(() => {
         retrieveMovies()
       })
+      .catch((error) => {
+        setErrorAlertMessage('Sorry, it was not possible to update base')
+        setShowErrorAlertMessage(true)
+      })
   }
 
   return (
