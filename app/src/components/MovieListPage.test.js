@@ -109,4 +109,15 @@ describe('components/MovieListPage', () => {
         .toHaveLength(1)
     )
   })
+
+  it('should show success alert message when update base service ends on successful',
+    async () => {
+    renderMovieListPage()
+    fireEvent.click(screen.getByTestId('update-movie-base'))
+
+    await waitFor(() =>
+      expect(screen.queryAllByTestId('success-alert-message'))
+        .toHaveLength(1)
+    )
+  })
 })
