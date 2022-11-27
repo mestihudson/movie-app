@@ -5,6 +5,8 @@ export default function MovieListPage({
   const [collection, setCollection] = useState([])
   const [errorAlertMessage, setErrorAlertMessage] = useState('')
   const [showErrorAlertMessage, setShowErrorAlertMessage] = useState(false)
+  const [successAlertMessage, setSuccessAlertMessage] = useState('')
+  const [showSuccessAlertMessage, setShowSuccessAlertMessage] = useState(false)
 
   const retrieveMovies = () => {
     retrieveMoviesService()
@@ -23,6 +25,8 @@ export default function MovieListPage({
     updateBaseService()
       .then(() => {
         retrieveMovies()
+        setSuccessAlertMessage('Base successful updated')
+        setShowSuccessAlertMessage(true)
       })
       .catch((error) => {
         setErrorAlertMessage('Sorry, it was not possible to update base')
@@ -48,6 +52,10 @@ export default function MovieListPage({
       {
         showErrorAlertMessage &&
           <span data-testid='error-alert-message'>{errorAlertMessage}</span>
+      }
+      {
+        showSuccessAlertMessage &&
+          <span data-testid='success-alert-message'>{successAlertMessage}</span>
       }
     </>
   )
