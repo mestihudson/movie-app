@@ -1,6 +1,3 @@
-import { render, screen, waitFor } from '@testing-library/react'
-
-import MovieListPage from '../../../components/MovieListPage'
 import { retrieveMoviesService } from '../../../services/RetrieveMoviesService'
 import { rest, server } from '../mocks/server'
 
@@ -13,15 +10,8 @@ it('should retrieve movies from api', async () => {
       )
     })
   )
-  await waitFor(() =>
-    render(
-      <MovieListPage
-        retrieveMoviesService={retrieveMoviesService}
-      />
-    )
-  )
 
-  await waitFor(() => expect(screen.queryAllByTestId('movie')).toHaveLength(2))
+  await expect(retrieveMoviesService()).resolves.toStrictEqual([1,2])
 })
 
 it('should handler error from api', async () => {
@@ -33,15 +23,6 @@ it('should handler error from api', async () => {
       )
     })
   )
-  await waitFor(() =>
-    render(
-      <MovieListPage
-        retrieveMoviesService={retrieveMoviesService}
-      />
-    )
-  )
 
-  await waitFor(() =>
-    expect(screen.queryAllByTestId('error-alert-message')).toHaveLength(1)
-  )
+  await expect(retrieveMoviesService()).rejects.toThrow()
 })
