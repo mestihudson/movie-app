@@ -1,7 +1,7 @@
 import { retrieveMoviesService } from '../../../services/RetrieveMoviesService'
 import { rest, server } from '../mocks/server'
 
-it('should retrieve movies from api', async () => {
+it('should handler successful api response', async () => {
   server.use(
     rest.get('/api/movies', (req, res, ctx) => {
       return res(
@@ -14,7 +14,7 @@ it('should retrieve movies from api', async () => {
   await expect(retrieveMoviesService()).resolves.toStrictEqual([1,2])
 })
 
-it('should handler error from api', async () => {
+it('should handler error api response', async () => {
   server.use(
     rest.get('/api/movies', (req, res, ctx) => {
       return res(
