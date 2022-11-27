@@ -14,7 +14,7 @@
   },
   "scripts": {
     "test:integration": "react-scripts test --testMatch=**/__tests__/integration/**/*.test.js --setupFilesAfterEnv=./src/setupTests.integration.js",
-    "test:unit": "react-scripts test --testMatch=**/__tests__/unit/**/*.test.js",
+    "test:unit": "react-scripts test --testMatch=**/__tests__/unit/**/*.test.js --watchAll",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
