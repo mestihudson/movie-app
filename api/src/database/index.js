@@ -5,7 +5,7 @@ const knexfile = require('../knexfile')[environment]
 const knex = require('knex')(knexfile)
 
 const migrate = () => {
-  knex.migrate.latest()
+  return knex.migrate.latest()
     .then(() => {
       if (environment === 'development') {
         knex.seed.run()
