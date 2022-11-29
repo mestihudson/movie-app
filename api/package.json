@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon",
     "test": "jest",
+    "start": "nodemon --watch src --watch package.json",
     "serve": "node index.js",
     "build": "rm -frv build && mkdir -p build && cp -frv package-lock.json package.json src/* build"
   },
