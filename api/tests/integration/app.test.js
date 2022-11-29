@@ -17,10 +17,12 @@ afterAll((done) => {
     })
 })
 
-it('should return all movies from database', async () => {
-  const { status, body } = await request(api)
-    .get('/movies')
-  expect(status).toBe(200)
-  expect(body).toHaveLength(2)
+describe('get /movies', () => {
+  it('should return all movies from database', async () => {
+    const { status, body } = await request(api)
+      .get('/movies')
+    expect(status).toBe(200)
+    expect(body).toHaveLength(2)
+  })
 })
 
