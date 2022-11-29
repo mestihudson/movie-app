@@ -5,8 +5,8 @@ services:
     restart: always
     image: nginx:1.23.2
     volumes:
-    - /opt/projects/movie/infra/current/etc.nginx.sites-available.default:/etc/nginx/sites-available/default
-    - /opt/projects/movie/app/current:/var/www/html/current
+    - /opt/projects/movie/infra/current/etc_nginx_conf.d_default.conf:/etc/nginx/conf.d/default.conf
+    - /opt/projects/movie/app/current:/usr/share/nginx/html
     ports:
     - 80:80
 
