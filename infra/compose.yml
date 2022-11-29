@@ -17,7 +17,7 @@ services:
     - /opt/projects/movie/infra/current/api/.env:/opt/projects/movie/api/.env
     - /opt/projects/movie/api/current:/opt/projects/movie/api/current
     working_dir: /opt/projects/movie/api/current
-    entrypoint: bash -c "npm install && npm start"
+    entrypoint: bash -c "npm ci && npm serve"
     ports:
     - 4000
     env_file:
