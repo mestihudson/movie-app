@@ -39,7 +39,7 @@ export default function MovieListPage({
       MovieListPage
       <ul>
         {
-          collection.map((e, i) => <li key={i} data-testid='movie'>{e}</li>)
+          collection.map(({ id, title }, i) => <li key={id} data-testid='movie'>{title}</li>)
         }
       </ul>
       {
