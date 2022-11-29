@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  app:
+    restart: always
+    image: nginx:1.23.2
+    volumes:
+    - /opt/projects/movie/infra/current/etc_nginx_conf.d_default.conf:/etc/nginx/conf.d/default.conf
+    - /opt/projects/movie/app/current:/usr/share/nginx/html
+    ports:
+    - 80:80
+
+  api:
+    restart: always
+    image: node:18.12.1
+    volumes:
+    - /opt/projects/movie/infra/current/api/.env:/opt/projects/movie/api/.env
+    - /opt/projects/movie/api/current:/opt/projects/movie/api/current
+    working_dir: /opt/projects/movie/api/current
+    entrypoint: bash -c "npm ci && npm run serve"
+    ports:
+    - 4000
+    env_file:
+    - /opt/projects/movie/infra/current/api/.env
+    environment:
+      PORT: 4000
+      DB_HOST: db
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PORT: 5432
+
+  db:
+    restart: always
+    image: postgres:15.1-alpine3.16
+    volumes:
+    - /opt/projects/movie/db/data:/var/lib/postgresql/data/pgdata
+    ports:
+    - 5432
+    env_file:
+    - /opt/projects/movie/infra/current/db/.env
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
