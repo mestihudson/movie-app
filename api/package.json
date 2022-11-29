@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon",
+    "serve": "node index.js",
     "build": "rm -frv build && mkdir -p build && cp -frv package-lock.json package.json src/* build"
   },
   "keywords": [],
