@@ -21,7 +21,7 @@ services:
     ports:
     - 4000
     env_file:
-    - /opt/projects/movie/infra/api/.env
+    - /opt/projects/movie/infra/current/api/.env
     environment:
       PORT: 4000
       DB_HOST: db
