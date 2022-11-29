@@ -47,6 +47,23 @@ jobs:
         name: api-build
         path: api.${{ github.sha }}.tar.gz
         retention-days: 1
+    - name: building-infra
+      run: |
+        mkdir -p infra/api
+        echo "DB_PASSWORD=${{ secrets.API_ENV_DB_PASSWORD }}" >> infra/api/.env
+        echo "NODE_ENV=${{ secrets.API_ENV_NODE_ENV }}" >> infra/api/.env
+        mkdir -p infra/db
+        echo "POSTGRES_PASSWORD=${{ secrets.DB_ENV_POSTGRES_PASSWORD }}" >> infra/db/.env
+    - name: creating-infra-deployment-artifact
+      run: |
+        cd infra
+        tar -cvzf ../infra."${GITHUB_SHA}".tar.gz ./
+    - name: uploading-infra-deployment-artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: infra-build
+        path: infra.${{ github.sha }}.tar.gz
+        retention-days: 1
 
   deploy:
     needs: build
@@ -56,48 +73,71 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: app-build
-    - name: coping-app-deployment-artifact-to-server
-      uses: appleboy/scp-action@master
-      with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
-        source: app.${{ github.sha }}.tar.gz
-        target: /tmp/
     - name: downloading-api-deployment-artifact
       uses: actions/download-artifact@v3
       with:
         name: api-build
+    - name: downloading-infra-deployment-artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: infra-build
+    - name: coping-app-deployment-artifact-to-server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        source: app.${{ github.sha }}.tar.gz
+        target: /tmp/
     - name: coping-api-deployment-artifact-to-server
       uses: appleboy/scp-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         source: api.${{ github.sha }}.tar.gz
+        target: /tmp/
+    - name: coping-infra-deployment-artifact-to-server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        source: infra.${{ github.sha }}.tar.gz
         target: /tmp/
     - name: extracting-app-deployment-artifact-on-server
       uses: appleboy/ssh-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           mkdir -p /opt/projects/movie/app/releases/${{ github.sha }}
           tar -xvf /tmp/app.${{ github.sha }}.tar.gz -C /opt/projects/movie/app/releases/${{ github.sha }}
     - name: extracting-api-deployment-artifact-on-server
       uses: appleboy/ssh-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           mkdir -p /opt/projects/movie/api/releases/${{ github.sha }}
           tar -xvf /tmp/api.${{ github.sha }}.tar.gz -C /opt/projects/movie/api/releases/${{ github.sha }}
+    - name: extracting-infra-deployment-artifact-on-server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+          mkdir -p /opt/projects/movie/infra/releases/${{ github.sha }}
+          tar -xvf /tmp/infra.${{ github.sha }}.tar.gz -C /opt/projects/movie/infra/releases/${{ github.sha }}
 
   release:
     needs: deploy
@@ -106,24 +146,31 @@ jobs:
     - name: releasing-app
       uses: appleboy/ssh-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         script: ln -sfn /opt/projects/movie/app/releases/${{ github.sha }} /opt/projects/movie/app/current
     - name: releasing-api
       uses: appleboy/ssh-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           ln -sfn /opt/projects/movie/api/releases/${{ github.sha }} /opt/projects/movie/api/current
-          cd /opt/projects/movie/api/current
-          pm2 delete all
-          npm ci
-          pm2 start index.js --name "api.release."${{ github.sha }}
+    - name: releasing-infra
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+          ln -sfn /opt/projects/movie/infra/releases/${{ github.sha }} /opt/projects/movie/infra/current
+          cd /opt/projects/movie/infra/current
+          (docker compose down --volumes --remove-orphans && docker compose up --detach)
 
   clean:
     needs: deploy
@@ -132,13 +179,15 @@ jobs:
     - name: cleaning-modules
       uses: appleboy/ssh-action@master
       with:
-        host: "ec2-44-212-44-166.compute-1.amazonaws.com"
-        username: "ubuntu"
-        key: ${{ secrets.EC2_SSH_KEY }}
-        port: 22
+        host: ${{ secrets.SERVER_SSH_HOST }}
+        username: ${{ SERVER_SSH_HOST.SERVER_SSH_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           rm -frv /tmp/app.*
           rm -frv /tmp/api.*
+          rm -frv /tmp/infra.*
           (cd /opt/projects/movie/app/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
           (cd /opt/projects/movie/api/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
+          (cd /opt/projects/movie/infra/releases && ls -t -1 | tail -n +6 | xargs rm -rf)
 
