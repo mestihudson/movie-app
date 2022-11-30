@@ -17,7 +17,6 @@ const defaultValues = {
 const environments = {
   test: {
     ...defaultValues,
-    debug: false,
     connection: {
       port:     5432,
       host:     'db',
@@ -26,18 +25,21 @@ const environments = {
       password: 'postgres12345678',
     },
     seeds: {
-      directory: `${__dirname}/database/seeds`,
+      directory: `${__dirname}/database/seeds/test`,
     },
   },
   development: {
     ...defaultValues,
     seeds: {
-      directory: `${__dirname}/database/seeds`,
+      directory: `${__dirname}/database/seeds/development`,
     },
   },
   production: {
     ...defaultValues,
     debug: false,
+    seeds: {
+      directory: `${__dirname}/database/seeds/production`,
+    },
   },
 }
 
