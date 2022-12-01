@@ -1,5 +1,8 @@
 const { knex, migrate } = require('../../../src/database')
 const saveMovies = require('../../../src/repositories/save-movies')
+const { clearMovieTable } = require('./helpers')
+
+beforeEach(async () => await clearMovieTable())
 
 beforeAll((done) => {
   migrate()
@@ -12,21 +15,6 @@ afterAll((done) => {
   knex.destroy()
     .finally(() => {
       done()
-    })
-})
-
-beforeEach((done) => {
-  knex
-    .raw(`
-      alter sequence movie_id_seq restart with 1;
-      update movie set id = default;
-    `)
-    .then(() => {
-      knex('movie')
-        .del()
-        .finally(() => {
-          done()
-        })
     })
 })
 
