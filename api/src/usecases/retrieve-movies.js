@@ -1,5 +1,5 @@
-const { knex } = require('../database')
-
-module.exports = () => {
-  return knex.select('*').from('movie')
+module.exports = ({
+    getMovies = require('../repositories/get-movies')
+  } = {}) => {
+  return getMovies()
 }
