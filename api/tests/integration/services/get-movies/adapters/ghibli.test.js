@@ -1,5 +1,5 @@
 const nock = require('nock')
-const getMovies = require('../../../src/services/get-movies')
+const getMovies = require('../../../../../src/services/get-movies/adapters/ghibli')
 
 it('should retrieve data from ghibli api', async () => {
   nock('https://ghibliapi.herokuapp.com/films')
