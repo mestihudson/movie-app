@@ -31,7 +31,6 @@ const addDirectorAndProducer = async (movies) => {
         .map(({ name }) => name).join(', '),
     })
   }
-  console.log(resultMovies)
   return resultMovies
 }
 
