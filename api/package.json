@@ -4,6 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "test:unit": "jest --testMatch=**/tests/unit/**/*.test.js",
+    "test:integration": "jest --testMatch=**/tests/integration/**/*.test.js --detectOpenHandles --forceExit",
+    "test:e2e": "jest --testMatch=**/tests/e2e/**/*.test.js --detectOpenHandles --forceExit",
     "test": "jest",
     "start": "nodemon --watch src --watch package.json",
     "serve": "node index.js",
