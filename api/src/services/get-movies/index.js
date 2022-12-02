@@ -1,5 +1,5 @@
 module.exports = ({
-    adapter = require('./adapters/ghibli')
+    adapter = require('./adapters/tmdb')
   } = {}) => {
     return adapter()
 }
