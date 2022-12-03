@@ -1,9 +1,9 @@
-const nock = require('nock')
 const request = require('supertest')
 
 const api = require('../../src/app')
 const { knex, migrate } = require('../../src/database')
-const { mockTmdbCall } = require('../integration/services/get-movies/adapters/helpers')
+const { rest, server, mockTheMovieDbCall } = require('../integration/services/get-movies/adapters/helpers')
+
 
 beforeAll((done) => {
   migrate()
@@ -48,15 +48,26 @@ describe('get /movies', () => {
 })
 
 describe('get /update', () => {
+  beforeAll(() => {
+    server.listen({
+      onUnhandledRequest: 'warn'
+    })
+  })
+
   beforeEach(() => {
-    nock.cleanAll()
+    server.resetHandlers()
+  })
+
+  afterAll(() => {
+    server.close()
   })
 
   it('should retrieve data from ghibli api', async () => {
-    await mockTmdbCall()
+    mockTheMovieDbCall()
 
     const { status, body } = await request(api)
       .get('/update')
+
     expect(status).toBe(200)
     expect(body).toEqual(
       expect.objectContaining({ modified: expect.any(Boolean) })
