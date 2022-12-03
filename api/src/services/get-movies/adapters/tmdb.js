@@ -31,7 +31,7 @@ const addDirectorAndProducer = async (movies, doGetRequest) => {
 }
 
 module.exports = async ({
-    doGetRequest = require('../../../infra/http-request/adapters/axios')
+    doGetRequest = require('../../../infra/http-request/adapters/https')
   } = {}) => {
   const url = 'https://api.themoviedb.org/4/list/1'
   const params = { api_key }
