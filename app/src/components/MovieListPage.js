@@ -19,6 +19,7 @@ export default function MovieListPage({
 
   useEffect(() => {
     retrieveMovies()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onButtonClick = () => {
