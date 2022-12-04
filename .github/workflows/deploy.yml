@@ -52,6 +52,7 @@ jobs:
         mkdir -p infra/api
         echo "DB_PASSWORD=${{ secrets.API_ENV_DB_PASSWORD }}" >> infra/api/.env
         echo "NODE_ENV=${{ secrets.API_ENV_NODE_ENV }}" >> infra/api/.env
+        echo "TMDB_API_KEY=${{ secrets.API_ENV_TMDB_API_KEY }}" >> infra/api/.env
         mkdir -p infra/db
         echo "POSTGRES_PASSWORD=${{ secrets.DB_ENV_POSTGRES_PASSWORD }}" >> infra/db/.env
     - name: creating-infra-deployment-artifact
