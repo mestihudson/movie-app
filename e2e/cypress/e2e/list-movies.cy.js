@@ -1,13 +1,24 @@
 describe('List Movies', () => {
   it('should display the list of movies', () => {
-    cy.visit('http://app:14000')
+    cy.exec('npm run helpers cleanDatabase').then((result) => {
+      expect(result.stdout).to.contains('{ ok: true }')
+    })
 
-    cy.contains('Grave of the Fireflies')
-      .should('not.exist')
+    cy.exec('npm run helpers getTitleOfFirstCurrentMovies').then((result) => {
+      const rx = /{ title: '(.*)' }/g
+      const matched = rx.exec(result.stdout)
+      const title = matched[1]
+      expect(title).not.to.be.undefined
 
-    cy.get('[data-testid="update-movie-base"]')
-      .click()
+      cy.visit('http://app:14000')
 
-    cy.contains('Grave of the Fireflies')
+      cy.contains(title)
+        .should('not.exist')
+
+      cy.get('[data-testid="update-movie-base"]')
+        .click()
+
+      cy.contains(title, { timeout: 20000 })
+    })
   })
 })

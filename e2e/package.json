@@ -1,0 +1,13 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "cypress run --browser chrome --headless",
+    "helpers": "node cypress/e2e/helpers.runner.js"
+  },
+  "devDependencies": {
+    "cypress": "^11.2.0",
+    "knex": "^2.3.0",
+    "pg": "^8.8.0"
+  }
+}
