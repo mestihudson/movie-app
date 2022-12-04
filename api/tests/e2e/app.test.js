@@ -2,6 +2,7 @@ const request = require('supertest')
 
 const api = require('../../src/app')
 const { knex, migrate } = require('../../src/database')
+const { clearMovieTable } = require('../..//tests/integration/repositories/helpers')
 const { rest, server, mockTheMovieDbCall } = require('../integration/services/get-movies/adapters/helpers')
 
 
@@ -20,17 +21,9 @@ afterAll((done) => {
 })
 
 beforeEach((done) => {
-  knex
-    .raw(`
-      alter sequence movie_id_seq restart with 1;
-      update movie set id = default;
-    `)
-    .then(() => {
-      knex('movie')
-        .del()
-        .finally(() => {
-          done()
-        })
+  clearMovieTable()
+    .finally(() => {
+      done()
     })
 })
 
