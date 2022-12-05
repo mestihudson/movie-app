@@ -13,6 +13,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "test:integration": "react-scripts test --testMatch=**/__tests__/integration/**/*.test.js --setupFilesAfterEnv=./src/setupTests.integration.js",
+    "test:unit": "react-scripts test --testMatch=**/__tests__/unit/**/*.test.js --watchAll",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -37,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "http-proxy-middleware": "^2.0.6"
+    "http-proxy-middleware": "^2.0.6",
+    "msw": "^0.49.0"
   }
 }

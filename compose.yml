@@ -8,10 +8,10 @@ services:
     working_dir: /ws/app
     restart: always
     ports:
-    - 14000:3000
+    - 14000:14000
     entrypoint: bash -c "npm install && npm start"
     environment:
-      PORT: 3000
+      PORT: 14000
       HOST: 0.0.0.0
 
   api:
@@ -40,3 +40,10 @@ services:
     restart: always
     ports:
     - 15432:8080
+
+  e2e:
+    image: cypress/included:11.2.0
+    volumes:
+    - .:/ws
+    working_dir: /ws/e2e
+    entrypoint: bash -c "tail -f"
