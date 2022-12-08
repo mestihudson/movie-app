@@ -61,7 +61,7 @@ describe('get /update', () => {
     server.close()
   })
 
-  it('should retrieve data from ghibli api', async () => {
+  it('should retrieve data from remote api', async () => {
     mockTheMovieDbCall()
 
     const { status, body } = await request(api)
