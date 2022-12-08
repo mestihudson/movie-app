@@ -36,7 +36,13 @@ describe('get /movies', () => {
     const { status, body } = await request(api)
       .get('/movies')
     expect(status).toBe(200)
-    expect(body).toHaveLength(2)
+    expect(body).toEqual(
+      expect.objectContaining({
+        movies: expect.any(Array),
+        total: expect.any(Number),
+      })
+    )
+    expect(body.movies).toHaveLength(2)
   })
 })
 
