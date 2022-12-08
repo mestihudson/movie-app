@@ -5,7 +5,6 @@ const { knex, migrate } = require('../../src/database')
 const { clearMovieTable } = require('../..//tests/integration/repositories/helpers')
 const { rest, server, mockTheMovieDbCall } = require('../integration/services/get-movies/adapters/helpers')
 
-
 beforeAll((done) => {
   migrate()
     .finally(() => {
@@ -36,7 +35,13 @@ describe('get /movies', () => {
     const { status, body } = await request(api)
       .get('/movies')
     expect(status).toBe(200)
-    expect(body).toHaveLength(2)
+    expect(body).toEqual(
+      expect.objectContaining({
+        movies: expect.any(Array),
+        total: expect.any(Number),
+      })
+    )
+    expect(body.movies).toHaveLength(2)
   })
 })
 
@@ -55,7 +60,7 @@ describe('get /update', () => {
     server.close()
   })
 
-  it('should retrieve data from ghibli api', async () => {
+  it('should retrieve data from remote api', async () => {
     mockTheMovieDbCall()
 
     const { status, body } = await request(api)
@@ -65,6 +70,18 @@ describe('get /update', () => {
     expect(body).toEqual(
       expect.objectContaining({ modified: expect.any(Boolean) })
     )
+  })
+
+  it('should avoid error during a second update request', async () => {
+    mockTheMovieDbCall()
+
+    const { status: s1, body: b1 } = await request(api).get('/update')
+    expect(s1).toBe(200)
+    expect(b1).toStrictEqual({ modified: true })
+
+    const { status: s2, body: b2 } = await request(api).get('/update')
+    expect(s2).toBe(200)
+    expect(b2).toStrictEqual({ modified: false })
   })
 })
 
