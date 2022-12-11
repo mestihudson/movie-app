@@ -12,8 +12,6 @@
     "serve": "node index.js",
     "build": "rm -frv build && mkdir -p build && cp -frv package-lock.json package.json src/* build"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.3.1",
