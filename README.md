@@ -1,6 +1,16 @@
-# Movie App
+# Movie App <a name="topo"></a>
 
-## Descrição geral
+- [Descrição geral](#descricao-geral)
+- [Componentes](#componentes)
+- [Fluxo de desenvolvimento](#fluxo-de-desenvolvimento)
+  - [compose.yml](#compose-yml)
+  - [e2e](#e2e)
+  - [app](#app)
+  - [api](#api)
+    - [swagger](#swagger)
+  - [.github/workflows/deploy.yml e infra](#github-workflows-deploy-yml-e-infra)
+
+## Descrição geral <a name="descricao-geral"></a>
   Esta é uma aplicação desenvolvida como resposta a um desafio de código.
 
   São funcionalidades da mesma:
@@ -17,7 +27,10 @@
     própria a partir de um sistema remoto (inicialmente ghibli-api, mas em
     função de sua instabilidade, foi usado como alterativa o tmdb.com)
 
-## Componentes
+  [Topo](#topo)
+
+## Componentes <a name="componentes"></a>
+
   * Frontend:
     - ReactJS (18.x, usando create-react-app);
     - Biblioteca nativa, fetch, para requisições http para a api do backend;
@@ -51,7 +64,10 @@
     - Github actions com apenas um workflow contendo todos os passos para
       realizar o build e deploy da solução;
 
-## Fluxo de desenvolvimento
+  [Topo](#topo)
+
+## Fluxo de desenvolvimento <a name="fluxo-de-desenvolvimento"></a>
+
   Após clonar o repositório e entrar no diretório raiz do projeto é possível
   visualizar os seguintes componentes:
   ```
@@ -65,7 +81,11 @@
     └── README.md
   ```
   A função de cada um será explicada, não necessariamente na ordem apresentada.
-### compose.yml
+
+  [Topo](#topo)
+
+### compose.yml <a name="compose-yml"></a>
+
   Começando pelo arquivo `compose.yml` que contem a definição da pilha completa
   do ambiente de desenvolvimento. Estando no mesmo diretório que ele é possível
   executar o seguinte comando para levantar um ambiente totalmente funcional:
@@ -80,7 +100,11 @@
   - adminer, um cliente web para acessar a instância do banco citado;
   - e2e, um container com o cypress configurado e pronto para rodar testes de
     ponta a ponta.
-### e2e
+
+  [Topo](#topo)
+
+### e2e <a name="e2e"></a>
+
   Passando para o diretório `e2e` é possível observar a seguinte estrutura de
   arquivos e pastas:
   ```
@@ -135,7 +159,11 @@
   ```
   Isso pode ser feito via api do cypress de forma a tornar os cenários de testes
   idempotentes (sempre têm os mesmos resultados para entradas conhecidas).
-### app
+
+  [Topo](#topo)
+
+### app <a name="app"></a>
+
   Como citado, `app` mantêm dos arquivos referentes ao frontend da solução,
   tendo sido criado pelo gerador `create-react-app`.
 
@@ -197,7 +225,11 @@
     que representam a aparência e o comportamento dos elementos em tela;
   * Finalmente, o módulo pode ser acessado pelo navegador pelo endereço `*:14000`,
     onde `*` pode ser `localhost` ou o ip da máquina onde o ambiente está rodando.
-### api
+
+  [Topo](#topo)
+
+### api <a name="api"></a>
+
   Chegando ao diretório `api`, é apresentada a estrutura reproduzida abaixo:
   ```
     ./api
@@ -312,12 +344,18 @@
   > Mas diferente daquele, aqui o docker não te lembrará disso, a api simplesmente não funcionará direito ou simplesmente não rodará pois as variáveis lá definidas são requeridas pela aplicação.
   > Novamente, uma forma simples é usar o arquivo `api/.env.example` como modelo.
 
-#### swagger
+  [Topo](#topo)
+
+#### swagger <a name="swagger"></a>
+
   A documentação swagger da api pode ser acessada [aqui](http://34.125.96.76:14000/api/docs/).
 
-### .github/workflows/deploy.yml e infra
+  [Topo](#topo)
+
+### .github/workflows/deploy.yml e infra <a name="github-workflows-deploy-yml-e-infra"></a>
+
   Para concluir chegamos ao arquivo de build/deploy da aplicação.
-  
+
   A ideia inicial é ter um esquema de iaac (infra-structure as a code), que ainda está no horizonte mas para um segundo momento de maneira mais profunda, para o momento foi criada uma instância de vm no google cloud platform onde a aplicação é implantada após os processos de build dos módulos da mesma. No cenário atual essa pipeline funciona da seguinte forma:
   - `build`:
     1. os arquivos são clonados do repositório sempre que um push é feito para a branch `main` ou para branches que sigam o padrão `*/*` à exceção de branches com padrão `docs/*`;
@@ -335,3 +373,6 @@
     2. o comando docker compose para reiniciar a solução (app, api e db) é executado na máquina de implantação;
   - `clean`: é realizado um procedimento para remover os artefatos copiados para a máquina de implantação, bem como deixar na mesma máquina apenas as últimas 5 releases.
   Ainda, o arquivo `infra/compose.yml` guarda toda a configuração necessária para realizar o procedimento descrito no segundo item de `release`. Já o arquivo `infra/etc_nginx_conf.d_default.conf` mantém versionado algumas configurações para o nginx utilizado na máquina de implantação.
+
+  [Topo](#topo)
+
