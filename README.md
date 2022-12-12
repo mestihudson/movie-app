@@ -1,5 +1,7 @@
 # Movie App <a name="topo"></a>
 
+[![wakatime](https://wakatime.com/badge/user/48934c05-d278-4192-836d-f54413d773b2/project/fc74032a-10e8-4135-a3e6-a15db640f1b8.svg)](https://wakatime.com/badge/user/48934c05-d278-4192-836d-f54413d773b2/project/fc74032a-10e8-4135-a3e6-a15db640f1b8)
+
 - [Descrição geral](#descricao-geral)
 - [Componentes](#componentes)
 - [Fluxo de desenvolvimento](#fluxo-de-desenvolvimento)
