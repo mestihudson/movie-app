@@ -20,39 +20,7 @@ const specs = swaggerJsDoc({
     },
     components: {
       schemas: {
-        "RetrieveMoviesResponse": {
-          "type": "object",
-          "properties": {
-            "movies": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/Movie"
-              }
-            },
-            "total": {
-              "type": "number"
-            }
-          }
-        },
-        "Movie": {
-          "type": "object",
-          "properties": {
-            "id": { "type": "number" },
-            "title": { "type": "string" },
-            "description": { "type": "string" },
-            "director": { "type": "string" },
-            "producer": { "type": "string" },
-            "banner": { "type": "string" },
-            "poster": { "type": "string" },
-            "originalId": { "type": "string" }
-          }
-        },
-        "UpdateBaseResponse": {
-          "type": "object",
-          "properties": {
-            "modified": { "type": "boolean" }
-          }
-        }
+        ...require('./schemas-swagger.json')
       },
     },
   },
