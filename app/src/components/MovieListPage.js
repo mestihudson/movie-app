@@ -131,9 +131,9 @@ export default function MovieListPage({
                   className="movie-box"
                   title='Clique para mais informações'
                 >
-                  <img src={poster} alt={title}
+                  <img src={poster} alt={title} width="100"
                     onClick={(e) => onPosterClick(movie)}
-                  />
+                  /><br/>
                   <span>{title}</span>
                 </div>
               )
