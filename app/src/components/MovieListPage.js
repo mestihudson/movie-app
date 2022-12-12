@@ -10,6 +10,14 @@ export default function MovieListPage({
   const [pages, setPages] = useState([])
   const pageSize = 10
   const [currentPage, setCurrentPage] = useState(1)
+  const [showDetails, setShowDetails] = useState(false)
+  const [details, setDetails] = useState({
+    title: '',
+    description: '',
+    director: '',
+    producer: '',
+    banner: ''
+  })
 
   const retrieveMovies = (page = 1) => {
     retrieveMoviesService(page)
@@ -59,9 +67,28 @@ export default function MovieListPage({
     return currentPage === page
   }
 
+  const onPosterClick = (movie) => {
+    toggleDetails(true, movie)
+  }
+
+  const onBannerClick = () => {
+    toggleDetails(false)
+  }
+
+  const toggleDetails = (show, movie) => {
+    setShowDetails(show)
+    if (movie) {
+      let { banner } = movie
+      banner = banner !== '' ? `https://image.tmdb.org/t/p/w500/${banner}` : ''
+      setDetails({ ...movie, banner })
+    }
+  }
+
   return (
     <>
       MovieListPage
+      <button onClick={onButtonClick} data-testid='update-movie-base'
+      >Atualizar</button>
       <ul>
         {
           pages.length > 0 && (
@@ -93,18 +120,45 @@ export default function MovieListPage({
           )
         }
       </ul>
-      <ul>
+      <div className="movies-wrapper">
         {
-          collection.map(({ id, title }, i) => <li key={id} data-testid='movie'>{title}</li>)
+          collection
+            .map((movie, i) => {
+              let { id, title, poster } = movie
+              poster = `https://image.tmdb.org/t/p/w154/${poster}`
+              return (
+                <div key={id} data-testid='movie'
+                  className="movie-box"
+                  title='Clique para mais informações'
+                >
+                  <img src={poster} alt={title}
+                    onClick={(e) => onPosterClick(movie)}
+                  />
+                  <span>{title}</span>
+                </div>
+              )
+            })
         }
-      </ul>
+      </div>
+      {
+        showDetails && (
+          <div className="movie-box-detail">
+            <span>{details.title}</span><br/>
+            <img src={details.banner} alt={details.title}
+              onClick={() => onBannerClick()}
+              title='Clique para esconder'
+            /><br/>
+            <span>{details.description}</span><br/>
+            <span>Dirigidor por: {details.director}</span><br/>
+            <span>Produzido por: {details.producer}</span><br/>
+          </div>
+        )
+      }
       {
         !collection.length &&
           <span data-testid='empty-movie-list-message'
           >Sorry, there is no movie to show!</span>
       }
-      <button onClick={onButtonClick} data-testid='update-movie-base'
-      >Atualizar</button>
       {
         showErrorAlertMessage &&
           <span data-testid='error-alert-message'>{errorAlertMessage}</span>
