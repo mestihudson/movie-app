@@ -19,7 +19,7 @@ const specs = swaggerJsDoc({
       version: '1.0.0',
     }
   },
-  apis: ['../src/routers/movie.js'],
+  apis: ['**/routers/**/*.js'],
 })
 
 console.log(specs)
