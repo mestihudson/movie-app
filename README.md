@@ -348,7 +348,7 @@
 
 #### swagger <a name="swagger"></a>
 
-  A documentação swagger da api pode ser acessada [aqui](http://34.125.96.76:14000/api/docs/).
+  A documentação swagger da api pode ser acessada [aqui](http://34.125.47.242/api/docs/).
 
   [Topo](#topo)
 
@@ -373,6 +373,7 @@
     2. o comando docker compose para reiniciar a solução (app, api e db) é executado na máquina de implantação;
   - `clean`: é realizado um procedimento para remover os artefatos copiados para a máquina de implantação, bem como deixar na mesma máquina apenas as últimas 5 releases.
   Ainda, o arquivo `infra/compose.yml` guarda toda a configuração necessária para realizar o procedimento descrito no segundo item de `release`. Já o arquivo `infra/etc_nginx_conf.d_default.conf` mantém versionado algumas configurações para o nginx utilizado na máquina de implantação.
+  
+  O link para a aplicação implantada está [aqui](http://34.125.47.242/).
 
   [Topo](#topo)
-
