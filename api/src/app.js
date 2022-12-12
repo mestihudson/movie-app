@@ -18,6 +18,20 @@ const specs = swaggerJsDoc({
       description: 'Serviços disponibilizados pela api da aplicação movie-app',
       version: '1.0.0',
     },
+    servers: [
+      ...[
+        process.env.NODE_ENV != 'production'
+          ? {
+            url: `${process.env.REMOTE_APP_ADDRESS || 'localhost'}:14000/api`,
+            description: "Development server"
+          }
+          : {}
+      ],
+      {
+        url: `${process.env.API_BASE_URL}/api`,
+        description: "Production server"
+      },
+    ],
     components: {
       schemas: {
         ...require('./schemas-swagger.json')
