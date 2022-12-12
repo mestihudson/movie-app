@@ -313,7 +313,7 @@
   > Novamente, uma forma simples é usar o arquivo `api/.env.example` como modelo.
 
 #### swagger
-  A documentação swagger da api pode ser acessada pelo endereço: (http://34.125.96.76:14000/api/docs/)[http://34.125.96.76:14000/api/docs/]
+  A documentação swagger da api pode ser acessada [aqui](http://34.125.96.76:14000/api/docs/).
 
 ### .github/workflows/deploy.yml e infra
   Para concluir chegamos ao arquivo de build/deploy da aplicação.
