@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
-import MovieListPage from '../../../components/MovieListPage'
+import MovieListPage from '../../../src/components/MovieListPage'
 
 const renderMovieListPage = ({
     retrieveMoviesServiceMock = jest.fn()
