@@ -5,7 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack server --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config=jest.config.js --watchAll"
   },
   "license": "ISC",
   "dependencies": {
