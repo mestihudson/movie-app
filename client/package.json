@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack server --mode development",
+    "coverage": "jest --config=all.jest.config.js --coverage",
     "test:integration:coverage": "jest --config=integration.jest.config.js --coverage",
     "test:integration": "jest --config=integration.jest.config.js",
     "test:unit:coverage": "jest --config=unit.jest.config.js --coverage",
