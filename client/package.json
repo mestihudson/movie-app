@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack server --mode development",
+    "test:unit:coverage": "jest --config=unit.jest.config.js --coverage",
     "test:unit": "jest --config=unit.jest.config.js"
   },
   "license": "ISC",
