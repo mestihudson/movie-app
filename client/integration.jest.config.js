@@ -6,3 +6,7 @@ module.exports = {
     '**/tests/integration/**/*.test.js'
   ],
   setupFilesAfterEnv: ['<rootDir>/setupTests.integration.js'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.js',
+  ],
+}
