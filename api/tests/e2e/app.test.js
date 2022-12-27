@@ -5,6 +5,8 @@ const { knex, migrate } = require('../../src/database')
 const { clearMovieTable } = require('../../tests/integration/repositories/helpers')
 const { rest, server, mockTheMovieDbCall } = require('../integration/services/get-movies/adapters/helpers')
 
+const API_URL = process.env.API_URL || 'http://localhost:3000'
+
 beforeAll((done) => {
   migrate()
     .finally(() => {
