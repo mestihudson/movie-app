@@ -7,6 +7,7 @@
     "test:unit": "jest --testMatch=**/tests/unit/**/*.test.js",
     "test:integration": "jest --testMatch=**/tests/integration/**/*.test.js --detectOpenHandles --forceExit",
     "test:e2e": "jest --testMatch=**/tests/e2e/**/*.test.js --detectOpenHandles --forceExit",
+    "test:unit:coverage": "yarn test:unit --detectOpenHandles --forceExit --runInBand --config=all.jest.config.js",
     "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
     "start": "nodemon --watch src --watch package.json",
     "serve": "node index.js",
