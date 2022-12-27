@@ -4,6 +4,12 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "prenyc": "rm -frv .nyc_output build coverage output",
+    "nyc": "(yarn build && cd build && PORT=4000 nyc --silent --show-process-tree --clean node index.js &) && sleep 10s",
+    "precover": "yarn nyc",
+    "postcover": "kill `ps aux | grep 'node' | grep -v nyc | grep -v grep | grep 'index.js' | awk '{ print $2 }'` && (cd build && yarn report)",
+    "cover": "API_URL='http://localhost:4000' yarn test:e2e --forceExit --detectOpenHandles --runInBand",
+    "report": "nyc report --reporter=text --reporter=html --report=lcov",
     "test:unit": "jest --testMatch=**/tests/unit/**/*.test.js",
     "test:unit:coverage": "yarn test:unit --detectOpenHandles --forceExit --runInBand --config=all.jest.config.js",
     "test:integration": "jest --testMatch=**/tests/integration/**/*.test.js",
