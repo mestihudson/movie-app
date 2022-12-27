@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production && sed -i \"s|BUILD_NUMBER|$GITHUB_SHA|g\" build/index.html",
     "start": "webpack server --mode development",
     "coverage": "jest --config=all.jest.config.js --coverage",
     "test:integration:coverage": "jest --config=integration.jest.config.js --coverage",
