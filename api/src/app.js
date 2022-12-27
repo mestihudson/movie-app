@@ -8,6 +8,10 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+app.use(function(req, res, next) {
+  res.setHeader('build.number', process.env.BUILD_NUMBER || process.env.NODE_ENV)
+  next()
+})
 
 const specs = swaggerJsDoc({
   failOnErrors: true,

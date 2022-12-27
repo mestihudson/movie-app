@@ -1,4 +1,4 @@
-import { updateBaseService } from '../../../services/UpdateBaseService'
+import { updateBaseService } from '../../../src/services/UpdateBaseService'
 import { rest, server } from '../mocks/server'
 
 it('should handler successful api response', async () => {

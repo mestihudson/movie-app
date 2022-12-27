@@ -1,4 +1,4 @@
-import { retrieveMoviesService } from '../../../services/RetrieveMoviesService'
+import { retrieveMoviesService } from '../../../src/services/RetrieveMoviesService'
 import { rest, server } from '../mocks/server'
 
 it('should handler successful api response', async () => {

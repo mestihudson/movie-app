@@ -5,9 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "test:unit": "jest --testMatch=**/tests/unit/**/*.test.js",
-    "test:integration": "jest --testMatch=**/tests/integration/**/*.test.js --detectOpenHandles --forceExit",
-    "test:e2e": "jest --testMatch=**/tests/e2e/**/*.test.js --detectOpenHandles --forceExit",
+    "test:unit:coverage": "yarn test:unit --detectOpenHandles --forceExit --runInBand --config=all.jest.config.js",
+    "test:integration": "jest --testMatch=**/tests/integration/**/*.test.js",
+    "test:integration:coverage": "yarn test:integration --detectOpenHandles --forceExit --runInBand --config=all.jest.config.js",
+    "test:e2e": "jest --testMatch=**/tests/e2e/**/*.test.js",
+    "test:e2e:coverage": "yarn test:e2e --runInBand --config=all.jest.config.js --detectOpenHandles --forceExit",
     "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "coverage": "jest --detectOpenHandles --forceExit --runInBand --config=all.jest.config.js",
     "start": "nodemon --watch src --watch package.json",
     "serve": "node index.js",
     "build": "rm -frv build && mkdir -p build && cp -frv package-lock.json package.json src/* build"
