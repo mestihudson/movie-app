@@ -2,7 +2,7 @@ const request = require('supertest')
 
 const api = require('../../src/app')
 const { knex, migrate } = require('../../src/database')
-const { clearMovieTable } = require('../..//tests/integration/repositories/helpers')
+const { clearMovieTable } = require('../../tests/integration/repositories/helpers')
 const { rest, server, mockTheMovieDbCall } = require('../integration/services/get-movies/adapters/helpers')
 
 beforeAll((done) => {
