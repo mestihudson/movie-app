@@ -7,6 +7,8 @@ const { rest, server, mockTheMovieDbCall } = require('../integration/services/ge
 
 const API_URL = process.env.API_URL || 'http://localhost:3000'
 
+jest.setTimeout(20000)
+
 beforeAll((done) => {
   migrate()
     .finally(() => {
