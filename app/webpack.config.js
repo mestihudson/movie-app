@@ -58,6 +58,10 @@ module.exports = {
     historyApiFallback: true,
     open: true,
     hot: true,
+    static: {
+      directory: path.join(__dirname, './'),
+      serveIndex: true,
+    },
     proxy: {
       '/api': {
         target: 'http://api:3000',
