@@ -1,14 +1,2 @@
-.movies-wrapper {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-auto-rows: minmax(200px, auto);
-  list-style-type: none !important;
-}
 
-.movie-box {
-  border: 2px solid #ffa94d;
-  border-radius: 5px;
-  background-color: #ffd8a8;
-  padding: 1em;
-  color: #d9480f;
 }
