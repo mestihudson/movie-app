@@ -9,4 +9,7 @@ module.exports = {
     '<rootDir>/src/**/*.js',
     '!<rootDir>/src/index.js',
   ],
+  moduleNameMapper: {
+    '\\.css$': 'identity-obj-proxy',
+  },
 }
