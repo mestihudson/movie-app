@@ -2,19 +2,16 @@ import { render, screen, waitFor } from '@testing-library/react'
 
 import Pagination from '@/components/Pagination'
 
-it("should render pagination when total > limit", async () => {
-  render(<Pagination total={2} limit={1} />)
+it.each([
+    ['', 2, '>', 1, 1],
+    [' not', 1, '==', 1, 0],
+  ])("should%s render pagination when total (%s) %s (%s) limit", async (
+    doit, total, how, limit, length
+  ) => {
+  render(<Pagination total={total} limit={limit} />)
 
   await waitFor(() =>
-    expect(screen.queryAllByTestId('pagination')).toHaveLength(1)
-  )
-})
-
-it("should not render pagination when total <= limit", async () => {
-  render(<Pagination total={1} limit={1} />)
-
-  await waitFor(() =>
-    expect(screen.queryAllByTestId('pagination')).toHaveLength(0)
+    expect(screen.queryAllByTestId('pagination')).toHaveLength(length)
   )
 })
 
