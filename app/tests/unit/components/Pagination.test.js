@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 
-import Pagination from '../../../src/components/Pagination'
+import Pagination from '@/components/Pagination'
 
 it("should render pagination when total > limit", async () => {
   render(<Pagination total={2} limit={1} />)
