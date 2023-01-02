@@ -4,7 +4,9 @@ import Pagination from '@/components/Pagination'
 
 it.each([
     ['', 2, '>', 1, 1],
+    ['', 20, '>', 10, 1],
     [' not', 1, '==', 1, 0],
+    [' not', 0, '==', 1, 0],
   ])("should%s render pagination when total (%s) %s (%s) limit", async (
     doit, total, how, limit, length
   ) => {
