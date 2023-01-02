@@ -1,6 +1,10 @@
-export default function Pagination() {
+export default function Pagination({ total, limit }) {
   return (
-    <div data-testid='pagination'>
-    </div>
+    <>
+    { total > limit && (
+      <div data-testid='pagination'>
+      </div>
+    )}
+    </>
   )
 }
