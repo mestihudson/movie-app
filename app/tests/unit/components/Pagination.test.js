@@ -1,4 +1,15 @@
-it.todo("should render pagination when total > limit")
+import { render, screen, waitFor } from '@testing-library/react'
+
+import Pagination from '../../../src/components/Pagination'
+
+it("should render pagination when total > limit", async () => {
+  render(<Pagination total={2} limit={1} />)
+
+  await waitFor(() =>
+    expect(screen.queryAllByTestId('pagination')).toHaveLength(1)
+  )
+})
+
 it.todo("should not render pagination when total <= limit")
 it.todo("should render '%s' page buttons group when total = '%' and limit = '%s'")
 it.todo("should render '%s' label to '%s' button when it has customized")
