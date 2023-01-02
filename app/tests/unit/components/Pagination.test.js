@@ -10,7 +10,14 @@ it("should render pagination when total > limit", async () => {
   )
 })
 
-it.todo("should not render pagination when total <= limit")
+it("should not render pagination when total <= limit", async () => {
+  render(<Pagination total={1} limit={1} />)
+
+  await waitFor(() =>
+    expect(screen.queryAllByTestId('pagination')).toHaveLength(0)
+  )
+})
+
 it.todo("should render '%s' page buttons group when total = '%' and limit = '%s'")
 it.todo("should render '%s' label to '%s' button when it has customized")
 it.todo("should render '%s' disabled when page count is '%s' and current = '%s'")
