@@ -18,13 +18,17 @@ it.each([
 })
 
 it.each([
-    [4, 2, 1],
-  ])("should render %s page buttons when total = %s and limit = %s",
-  async (items, total, limit) => {
+    [4, 'P 1 2 N', 2, 1],
+  ])("should render %s page buttons as '%s' when total = %s and limit = %s",
+  async (items, content, total, limit) => {
   render(<Pagination total={total} limit={limit} />)
 
   await waitFor(() =>
     expect(screen.queryAllByTestId('page-item')).toHaveLength(items)
+  )
+  await waitFor(() =>
+    expect(screen.getByTestId('pagination').textContent)
+      .toBe(content.split(' ').join(''))
   )
 })
 
