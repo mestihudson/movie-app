@@ -17,7 +17,17 @@ it.each([
   )
 })
 
-it.todo("should render '%s' page buttons group when total = '%' and limit = '%s'")
+it.each([
+    [4, 2, 1],
+  ])("should render %s page buttons when total = %s and limit = %s",
+  async (items, total, limit) => {
+  render(<Pagination total={total} limit={limit} />)
+
+  await waitFor(() =>
+    expect(screen.queryAllByTestId('page-item')).toHaveLength(items)
+  )
+})
+
 it.todo("should render '%s' label to '%s' button when it has customized")
 it.todo("should render '%s' disabled when page count is '%s' and current = '%s'")
 it.todo("should not be possible to click a disabled button")
