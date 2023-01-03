@@ -19,6 +19,10 @@ it.each([
 
 it.each([
     [4, 'P 1 2 N', 2, 1],
+    [5, 'P 1 2 3 N', 3, 1],
+    [6, 'P 1 2 3 4 N', 4, 1],
+    [6, 'P 1 2 ... 5 N', 5, 1],
+    [6, 'P 1 2 ... 10 N', 10, 1],
   ])("should render %s page buttons as '%s' when total = %s and limit = %s",
   async (items, content, total, limit) => {
   render(<Pagination total={total} limit={limit} />)
