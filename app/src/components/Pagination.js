@@ -1,4 +1,6 @@
-export default function Pagination({ total, limit, current = 1 }) {
+export default function Pagination({
+    total, limit, current = 1, prevLabel = 'P', nextLabel = 'N'
+  }) {
   const pages = new Array(Math.ceil(total / limit))
     .fill(0)
     .map((e, i) => {
@@ -7,7 +9,7 @@ export default function Pagination({ total, limit, current = 1 }) {
       return { key, label }
     })
   const items = [
-      { key: 'prev', label: 'P' },
+      { key: 'prev', label: prevLabel },
       ...pages
         .reduce((acc, cur, ind, src) => {
           const position = ind + 1
@@ -39,7 +41,7 @@ export default function Pagination({ total, limit, current = 1 }) {
           return result
         }, [])
       ,
-      { key: 'next', label: 'N' },
+      { key: 'next', label: nextLabel },
     ]
   return (
     <>
