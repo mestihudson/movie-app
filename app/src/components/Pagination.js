@@ -7,10 +7,23 @@ export default function Pagination({ total, limit }) {
       return { key, label }
     })
   const items = [
-    { key: 'prev', label: 'P' },
-    ...pages,
-    { key: 'next', label: 'N' },
-  ]
+      { key: 'prev', label: 'P' },
+      ...pages
+        .reduce((acc, cur, ind, src) => {
+          const { length: srcLen } = src
+          const visible = srcLen > 4 && (ind > 1 && ind < srcLen - 1)
+          return visible ? [ ...acc ] : [ ...acc, cur ]
+        }, [])
+        .reduce((acc, cur, ind, src) => {
+          const { length: srcLen } = src
+          const { length: pagesLen } = pages
+          const visible = pagesLen != srcLen && ind === src.length - 1
+          return visible
+            ? [ ...acc, { key: 'gap', label: '...' }, cur, ]
+            : [ ...acc, cur, ]
+        }, []),
+      { key: 'next', label: 'N' },
+    ]
   return (
     <>
     { total > limit && (
