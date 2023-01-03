@@ -58,7 +58,20 @@ it.each([
   )
 })
 
-it.todo("should render '%s' label to '%s' button when it has customized")
+it.each([
+    ['Anterior 1 2 N', 'prev', 2, 1, 1, { prevLabel: 'Anterior' }],
+    ['P 1 2 Próxima', 'next', 2, 1, 1, { nextLabel: 'Próxima' }],
+    ['Anterior 1 2 Próxima', 'prev and next', 2, 1, 1, { nextLabel: 'Próxima', prevLabel: 'Anterior' }],
+  ])("should render '%s' label(s) to '%s' button(s) when it has customized",
+  async (content, button, total, limit, current, props) => {
+  render(<Pagination total={total} limit={limit} current={current} {...props}/>)
+
+  await waitFor(() =>
+    expect(screen.getByTestId('pagination').textContent)
+      .toBe(content.split(' ').join(''))
+  )
+})
+
 it.todo("should render '%s' disabled when page count is '%s' and current = '%s'")
 it.todo("should not be possible to click a disabled button")
 it.todo("should trigger go to page when page button is clicked")
