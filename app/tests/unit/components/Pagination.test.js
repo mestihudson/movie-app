@@ -36,6 +36,28 @@ it.each([
   )
 })
 
+it.each([
+    [4, 'P 1 2 N', 2, 1, 2],
+    [5, 'P 1 2 3 N', 3, 1, 3],
+    [6, 'P 1 2 3 4 N', 4, 1, 3],
+    [7, 'P 1 2 3 ... 5 N', 5, 1, 2],
+    [7, 'P 1 2 3 4 5 N', 5, 1, 3],
+    [7, 'P 1 2 3 ... 10 N', 10, 1, 2],
+    [8, 'P 1 2 3 4 ... 10 N', 10, 1, 3],
+    [9, 'P 1 ... 3 4 5 ... 10 N', 10, 1, 4],
+  ])("should render %s page buttons as '%s' when total = %s and limit = %s and current = %s",
+  async (items, content, total, limit, current) => {
+  render(<Pagination total={total} limit={limit} current={current}/>)
+
+  await waitFor(() =>
+    expect(screen.queryAllByTestId('page-item')).toHaveLength(items)
+  )
+  await waitFor(() =>
+    expect(screen.getByTestId('pagination').textContent)
+      .toBe(content.split(' ').join(''))
+  )
+})
+
 it.todo("should render '%s' label to '%s' button when it has customized")
 it.todo("should render '%s' disabled when page count is '%s' and current = '%s'")
 it.todo("should not be possible to click a disabled button")
