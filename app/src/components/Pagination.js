@@ -1,4 +1,4 @@
-export default function Pagination({ total, limit }) {
+export default function Pagination({ total, limit, current = 1 }) {
   const pages = new Array(Math.ceil(total / limit))
     .fill(0)
     .map((e, i) => {
@@ -10,18 +10,35 @@ export default function Pagination({ total, limit }) {
       { key: 'prev', label: 'P' },
       ...pages
         .reduce((acc, cur, ind, src) => {
+          const position = ind + 1
           const { length: srcLen } = src
-          const visible = srcLen > 4 && (ind > 1 && ind < srcLen - 1)
-          return visible ? [ ...acc ] : [ ...acc, cur ]
+          const { length: pagesLen } = pages
+          const isGap = srcLen > 4 && position !== 1 && position !== pagesLen &&
+            Math.abs(current - position) > 1
+          const isBefore = isGap && current - position > 0
+          const isAfter = isGap && current - position < 0
+          return [ ...acc, { ...cur, isBefore, isAfter, isGap } ]
         }, [])
         .reduce((acc, cur, ind, src) => {
           const { length: srcLen } = src
           const { length: pagesLen } = pages
-          const visible = pagesLen != srcLen && ind === src.length - 1
-          return visible
-            ? [ ...acc, { key: 'gap', label: '...' }, cur, ]
-            : [ ...acc, cur, ]
-        }, []),
+          const { key, label } = cur
+          const result = cur.isBefore && !acc.some((e) => e.key === 'before')
+            ? [
+              ...acc,
+              { key: 'before', label: '...' }
+            ]
+            : (
+              cur.isAfter && !acc.some((e) => e.key === 'after')
+                ? [
+                  ...acc,
+                  { key: 'after', label: '...' }
+                ]
+                : (cur.isGap ? [ ...acc ] : [ ...acc, { key, label } ])
+            )
+          return result
+        }, [])
+      ,
       { key: 'next', label: 'N' },
     ]
   return (
