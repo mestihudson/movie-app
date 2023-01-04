@@ -4,12 +4,14 @@ export default function Pagination({
   const pages = new Array(Math.ceil(total / limit))
     .fill(0)
     .map((e, i) => {
-      const key = i + 1
+      const position = i + 1
+      const key = position
       const label = key
-      return { key, label }
+      const disabled = current === position
+      return { key, label, disabled }
     })
   const items = [
-      { key: 'prev', label: prevLabel },
+      { key: 'prev', label: prevLabel, disabled: current === 1 },
       ...pages
         .reduce((acc, cur, ind, src) => {
           const position = ind + 1
@@ -24,7 +26,7 @@ export default function Pagination({
         .reduce((acc, cur, ind, src) => {
           const { length: srcLen } = src
           const { length: pagesLen } = pages
-          const { key, label } = cur
+          const { key, label, disabled } = cur
           const result = cur.isBefore && !acc.some((e) => e.key === 'before')
             ? [
               ...acc,
@@ -36,19 +38,19 @@ export default function Pagination({
                   ...acc,
                   { key: 'after', label: '...' }
                 ]
-                : (cur.isGap ? [ ...acc ] : [ ...acc, { key, label } ])
+                : (cur.isGap ? [ ...acc ] : [ ...acc, { key, label, disabled } ])
             )
           return result
         }, [])
       ,
-      { key: 'next', label: nextLabel },
+      { key: 'next', label: nextLabel, disabled: current === pages.length },
     ]
   return (
     <>
     { total > limit && (
       <div data-testid='pagination'>
-        { items.map(({ key, label }) =>
-          <li key={key} data-testid='page-item'>{label}</li>
+        { items.map(({ key, label, disabled }) =>
+          <li key={key} data-testid='page-item'><button disabled={disabled}>{label}</button></li>
         )}
       </div>
     )}
