@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import Pagination from '@/components/Pagination'
 
@@ -100,5 +100,24 @@ it.each([
 })
 
 it.todo("should not be possible to click a disabled button")
-it.todo("should trigger go to page when page button is clicked")
+
+it("should trigger go to page when page button is clicked", async () => {
+  const button = '2'
+  const total = 9
+  const limit = 1
+  const current = 1
+  const goToPage = jest.fn()
+
+  render(
+    <Pagination
+      total={total} limit={limit} current={current} goToPage={goToPage}
+    />
+  )
+  await waitFor(() => {
+    fireEvent.click(screen.getByText(button))
+  })
+
+  expect(goToPage).toHaveBeenCalled()
+})
+
 it.todo("should go to page '%s' when '%s' page button is clicked")
