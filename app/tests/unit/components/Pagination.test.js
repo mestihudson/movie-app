@@ -138,4 +138,24 @@ it("should not be possible to click a disabled button", async () => {
 })
 
 
-it.todo("should go to page '%s' when '%s' page button is clicked")
+it.each([
+    [1, 1, 9, 9],
+    [8, 'P', 9, 9],
+    [9, 'N', 9, 8],
+  ])("should go to page '%s' when '%s' is clicked, page count = %s and current = %s",
+  async (target, button, pages, current) => {
+  const total = pages
+  const limit = 1
+  const goToPage = jest.fn()
+
+  render(
+    <Pagination
+      total={total} limit={limit} current={current} goToPage={goToPage}
+    />
+  )
+  await waitFor(() => {
+    fireEvent.click(screen.getByText(button))
+  })
+
+  expect(goToPage).toHaveBeenCalledWith(target)
+})
