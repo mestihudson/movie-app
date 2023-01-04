@@ -1,5 +1,6 @@
 export default function Pagination({
-    total, limit, current = 1, prevLabel = 'P', nextLabel = 'N'
+    total, limit, current = 1, prevLabel = 'P', nextLabel = 'N',
+    goToPage = function() {}
   }) {
   const pages = new Array(Math.ceil(total / limit))
     .fill(0)
@@ -45,12 +46,18 @@ export default function Pagination({
       ,
       { key: 'next', label: nextLabel, disabled: current === pages.length },
     ]
+  function pageItemButtonOnClick() {
+    goToPage()
+  }
   return (
     <>
     { total > limit && (
       <div data-testid='pagination'>
         { items.map(({ key, label, disabled }) =>
-          <li key={key} data-testid='page-item'><button disabled={disabled}>{label}</button></li>
+          <li key={key} data-testid='page-item'>
+            <button disabled={disabled} onClick={pageItemButtonOnClick}
+            >{label}</button>
+          </li>
         )}
       </div>
     )}
