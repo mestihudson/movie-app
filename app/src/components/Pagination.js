@@ -46,8 +46,15 @@ export default function Pagination({
       ,
       { key: 'next', label: nextLabel, disabled: current === pages.length },
     ]
-  function pageItemButtonOnClick() {
-    goToPage()
+  function pageItemButtonOnClick(key) {
+    let target = key
+    if (key === 'prev') {
+      target = current - 1
+    }
+    if (key === 'next') {
+      target = current + 1
+    }
+    goToPage(target)
   }
   return (
     <>
@@ -55,7 +62,7 @@ export default function Pagination({
       <div data-testid='pagination'>
         { items.map(({ key, label, disabled }) =>
           <li key={key} data-testid='page-item'>
-            <button disabled={disabled} onClick={pageItemButtonOnClick}
+            <button disabled={disabled} onClick={() => pageItemButtonOnClick(key)}
             >{label}</button>
           </li>
         )}
