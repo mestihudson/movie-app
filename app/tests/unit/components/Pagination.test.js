@@ -72,7 +72,33 @@ it.each([
   )
 })
 
-it.todo("should render '%s' disabled when page count is '%s' and current = '%s'")
+it.each([
+    ['P', true, 9, 1],
+    ['P', false, 9, 5],
+    ['P', false, 9, 9],
+    ['N', true, 9, 9],
+    ['N', false, 9, 5],
+    ['N', false, 9, 1],
+    ['1', true, 9, 1],
+    ['1', false, 9, 2],
+    ['1', false, 9, 3],
+    ['1', false, 9, 9],
+    ['2', true, 9, 2],
+    ['5', true, 9, 5],
+    ['9', false, 9, 1],
+    ['9', true, 9, 9],
+    ['...', false, 9, 1],
+  ])("should render '%s' disabled (%s) when page count is '%s' and current = '%s'",
+  async (button, disabled, pages, current) => {
+  const total = pages
+  const limit = 1
+  render(<Pagination total={total} limit={limit} current={current}/>)
+
+  await waitFor(() =>
+    expect(screen.getByText(button)).toHaveProperty('disabled', disabled)
+  )
+})
+
 it.todo("should not be possible to click a disabled button")
 it.todo("should trigger go to page when page button is clicked")
 it.todo("should go to page '%s' when '%s' page button is clicked")
