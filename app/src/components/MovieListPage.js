@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import Pagination from './Pagination'
+
 export default function MovieListPage({
   retrieveMoviesService, updateBaseService }) {
   const [collection, setCollection] = useState([])
@@ -18,6 +20,7 @@ export default function MovieListPage({
     producer: '',
     banner: ''
   })
+  const [totalMovies, setTotalMovies] = useState(0)
 
   const retrieveMovies = (page = 1) => {
     retrieveMoviesService(page)
@@ -34,6 +37,7 @@ export default function MovieListPage({
         setCurrentPage(page)
         setPages(pages)
         setCollection(movies)
+        setTotalMovies(total)
       })
       .catch((error) => {
         setErrorAlertMessage('Sorry, it was not possible to retrieve movies to show')
@@ -84,42 +88,18 @@ export default function MovieListPage({
     }
   }
 
+  const paginationPageItemOnClick = (page) => {
+    onGoPageClick(page)
+  }
+
   return (
     <>
       MovieListPage
       <button onClick={onButtonClick} data-testid='update-movie-base'
       >Atualizar</button>
-      <ul>
-        {
-          pages.length > 0 && (
-            <li>
-              <button
-                data-testid='first-page' onClick={() => onGoPageClick(1)}
-                disabled={isCurrentPage(1)}
-              >Primeira</button>
-            </li>
-          )
-        }
-        {
-          pages.map(({ key, label }) => (
-            <li key={key}>
-              <button data-testid='page' onClick={() => onGoPageClick(key)}
-                disabled={isCurrentPage(key)}
-              >{label}</button>
-            </li>
-          ))
-        }{
-          pages.length > 0 && (
-            <li>
-              <button
-                data-testid='last-page'
-                onClick={() => onGoPageClick(pages.length)}
-                disabled={isCurrentPage(pages.length)}
-              >Última</button>
-            </li>
-          )
-        }
-      </ul>
+      <Pagination total={totalMovies} limit={pageSize} current={currentPage}
+        goToPage={(page) => paginationPageItemOnClick(page)}
+      />
       <div className="movies-wrapper">
         {
           collection
