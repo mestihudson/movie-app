@@ -52,6 +52,7 @@ module.exports = {
     }),
   ],
   devServer: {
+    allowedHosts: 'all',
     static: path.join(__dirname, buildDir),
     compress: true,
     port: process.env.PORT,
