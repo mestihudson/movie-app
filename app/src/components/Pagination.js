@@ -31,13 +31,13 @@ export default function Pagination({
           const result = cur.isBefore && !acc.some((e) => e.key === 'before')
             ? [
               ...acc,
-              { key: 'before', label: '...' }
+              { key: 'before', label: '...', disabled: true }
             ]
             : (
               cur.isAfter && !acc.some((e) => e.key === 'after')
                 ? [
                   ...acc,
-                  { key: 'after', label: '...' }
+                  { key: 'after', label: '...', disabled: true }
                 ]
                 : (cur.isGap ? [ ...acc ] : [ ...acc, { key, label, disabled } ])
             )
@@ -60,12 +60,17 @@ export default function Pagination({
     <>
     { total > limit && (
       <div data-testid='pagination'>
-        { items.map(({ key, label, disabled }) =>
-          <li key={key} data-testid='page-item'>
-            <button disabled={disabled} onClick={() => pageItemButtonOnClick(key)}
+        { items.map(({ key, label, disabled }, index, { length }) => {
+          const props = index === 1
+            ? { 'data-testid' : 'first-page' }
+            : (index === length - 2 ? { 'data-testid' : 'last-page' } : {})
+          return (<li key={key} data-testid='page-item'>
+            <button
+              disabled={disabled} onClick={() => pageItemButtonOnClick(key)}
+              {...props}
             >{label}</button>
-          </li>
-        )}
+          </li>)
+        })}
       </div>
     )}
     </>
