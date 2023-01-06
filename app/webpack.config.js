@@ -52,12 +52,17 @@ module.exports = {
     }),
   ],
   devServer: {
+    allowedHosts: 'all',
     static: path.join(__dirname, buildDir),
     compress: true,
     port: process.env.PORT,
     historyApiFallback: true,
     open: true,
     hot: true,
+    static: {
+      directory: path.join(__dirname, './'),
+      serveIndex: true,
+    },
     proxy: {
       '/api': {
         target: 'http://api:3000',
