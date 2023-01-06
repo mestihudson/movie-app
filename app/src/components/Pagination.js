@@ -1,3 +1,5 @@
+import './Pagination.css'
+
 export default function Pagination({
     total, limit, current = 1, prevLabel = 'P', nextLabel = 'N',
     goToPage = function() {}
@@ -59,12 +61,24 @@ export default function Pagination({
   return (
     <>
     { total > limit && (
-      <div data-testid='pagination'>
+      <div data-testid='pagination' className='pagination'>
         { items.map(({ key, label, disabled }, index, { length }) => {
           const props = index === 1
             ? { 'data-testid' : 'first-page' }
             : (index === length - 2 ? { 'data-testid' : 'last-page' } : {})
-          return (<li key={key} data-testid='page-item'>
+          const classes = {
+            prev: 'prev',
+            next: 'next',
+            before: 'dots',
+            after: 'dots',
+          }
+          const style = `
+            page-item
+            ${disabled ? 'disabled' : ''}
+            ${classes[key] || 'page'}
+            ${current == key ? 'current' : ''}
+          `
+          return (<li key={key} data-testid='page-item' className={style}>
             <button
               disabled={disabled} onClick={() => pageItemButtonOnClick(key)}
               {...props}
