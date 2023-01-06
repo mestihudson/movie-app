@@ -87,7 +87,7 @@ it.each([
     ['5', true, 9, 5],
     ['9', false, 9, 1],
     ['9', true, 9, 9],
-    ['...', false, 9, 1],
+    ['...', true, 9, 1],
   ])("should render '%s' disabled (%s) when page count is '%s' and current = '%s'",
   async (button, disabled, pages, current) => {
   const total = pages
