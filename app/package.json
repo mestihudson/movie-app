@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "report": "nyc report --reporter=text --reporter=html --reporter=lcov",
     "test:e2e": "cypress run --browser chrome --headless --config-file tests/e2e/cypress.config.js",
     "build": "webpack --mode production && sed -i \"s|BUILD_NUMBER|$GITHUB_SHA|g\" build/index.html",
     "start": "webpack server --mode development",
