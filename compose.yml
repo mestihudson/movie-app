@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: node:18.12.1
+    image: cypress/included:12.3.0
     volumes:
     - .:/ws
     working_dir: /ws/app
