@@ -5,5 +5,5 @@ videos
 screenshots
 nohup.out
 coverage
-
 e2e/.specs
+.nyc_output
