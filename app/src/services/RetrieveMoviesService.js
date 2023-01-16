@@ -1,4 +1,4 @@
-export function retrieveMoviesService(page = 1) {
+export function retrieveMoviesService(page) {
   const uri = '/api/movies?' + new URLSearchParams({ page })
   return fetch(uri)
     .then((response) => {
