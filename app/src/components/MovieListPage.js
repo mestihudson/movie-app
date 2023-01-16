@@ -129,7 +129,7 @@ export default function MovieListPage({
               title='Clique para esconder'
             /><br/>
             <span>{details.description}</span><br/>
-            <span>Dirigidor por: {details.director}</span><br/>
+            <span>Dirigido por: {details.director}</span><br/>
             <span>Produzido por: {details.producer}</span><br/>
           </div>
         )
