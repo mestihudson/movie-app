@@ -56,6 +56,7 @@ describe('Pagination', () => {
 
       cy.log('page 3 among 6 (next page from 2)')
         cy.get('[data-testid="page-item"] > button').eq(6).click()
+        cy.wait(1)
         cy.get('[data-testid="movie"]').should('have.length', limit)
         cy.get('[data-testid="page-item"]').should('have.length', 8)
         cy.get('[data-testid="page-item"] > button').eq(3).should('be.disabled')
