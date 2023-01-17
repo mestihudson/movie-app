@@ -13,4 +13,6 @@ module.exports = {
     '\\.css$': 'identity-obj-proxy',
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  collectCoverage: true,
+  coverageReporters: ['json', 'html', 'text', 'text-summary'],
 }

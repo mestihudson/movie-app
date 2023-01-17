@@ -1,5 +1,12 @@
 {
-  "plugins": ["istanbul"],
+  "env": {
+    "test": {
+      "plugins": [],
+    },
+    "e2e": {
+      "plugins": ["istanbul"],
+    },
+  },
   "presets": [
     "@babel/preset-env",
     ["@babel/preset-react", { "runtime": "automatic" }],

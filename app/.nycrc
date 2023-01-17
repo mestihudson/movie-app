@@ -1,5 +1,6 @@
 {
   "all": true,
-  "extends": "@istanbuljs/nyc-config-babel",
-  "include": ["src"]
+  "include": ["src/**"],
+  "exclude": [],
+  "reporter": []
 }
