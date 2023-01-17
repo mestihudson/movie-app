@@ -25,7 +25,7 @@ it.each([
     [6, 'P 1 2 ... 10 N', 10, 1],
   ])("should render %s page buttons as '%s' when total = %s and limit = %s",
   async (items, content, total, limit) => {
-  render(<Pagination total={total} limit={limit} />)
+  render(<Pagination total={total} limit={limit} current={1}/>)
 
   await waitFor(() =>
     expect(screen.queryAllByTestId('page-item')).toHaveLength(items)
