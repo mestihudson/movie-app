@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
-import MovieListPage from '../../../src/components/MovieListPage'
+import MovieListPage from '@/components/MovieListPage'
 
 const retrieveMoviesServiceData = {
   movies: [{
