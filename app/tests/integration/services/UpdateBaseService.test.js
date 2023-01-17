@@ -1,5 +1,5 @@
-import { updateBaseService } from '../../../src/services/UpdateBaseService'
-import { rest, server } from '../mocks/server'
+import { updateBaseService } from '@/services/UpdateBaseService'
+import { rest, server } from '#/integration/mocks/server'
 
 it('should handler successful api response', async () => {
   server.use(
