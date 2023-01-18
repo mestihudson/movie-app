@@ -11,9 +11,9 @@
     "build": "webpack --mode production && sed -i \"s|BUILD_NUMBER|$GITHUB_SHA|g\" build/index.html",
     "start": "webpack server --mode development",
     "coverage": "jest --config=all.jest.config.js --coverage",
-    "test:integration:coverage": "jest --config=integration.jest.config.js --coverage",
     "test:unit:coverage": "jest --config=unit.jest.config.js --coverage",
     "test:unit": "jest --config=unit.jest.config.js"
+    "test:integration:coverage": "yarn test:integration --coverage",
     "test:integration": "jest --config=jest.config.integration.js",
   },
   "license": "ISC",
