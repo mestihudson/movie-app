@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "pretest:e2e:coverage": "rm -frv tests/e2e/report tests/e2e/tmp tests/e2e/.nyc_output tests/e2e/coverage build instrumented coverage dist output .nyc_output",
+    "pretest:e2e:coverage": "rm -frv tests/e2e/report tests/e2e/tmp tests/e2e/.nyc_output tests/e2e/coverage build instrumented coverage dist output .nyc_output merged-coverage coverage.json",
     "test:e2e:coverage": "start-test 'yarn start-it' :3000 'yarn test-it'",
     "start-it": "NODE_ENV=e2e PORT=3000 nyc --silent yarn start",
     "test-it": "BASE_URL='http://localhost:3000' yarn test:e2e",
