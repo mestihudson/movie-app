@@ -1,7 +1,8 @@
 import './Pagination.css'
 
 export default function Pagination({
-    total, limit, current, prevLabel = 'P', nextLabel = 'N', goToPage
+    total, limit, current = 1, prevLabel = 'P', nextLabel = 'N',
+    goToPage = function() {}
   }) {
   const pages = new Array(Math.ceil(total / limit))
     .fill(0)

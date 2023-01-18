@@ -67,6 +67,10 @@ export default function MovieListPage({
     retrieveMovies(page)
   }
 
+  const isCurrentPage = (page) => {
+    return currentPage === page
+  }
+
   const onPosterClick = (movie) => {
     toggleDetails(true, movie)
   }
@@ -79,7 +83,7 @@ export default function MovieListPage({
     setShowDetails(show)
     if (movie) {
       let { banner } = movie
-      banner = `https://image.tmdb.org/t/p/w500/${banner}`
+      banner = banner !== '' ? `https://image.tmdb.org/t/p/w500/${banner}` : ''
       setDetails({ ...movie, banner })
     }
   }
