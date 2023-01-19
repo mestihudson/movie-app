@@ -67,10 +67,6 @@ export default function MovieListPage({
     retrieveMovies(page)
   }
 
-  const isCurrentPage = (page) => {
-    return currentPage === page
-  }
-
   const onPosterClick = (movie) => {
     toggleDetails(true, movie)
   }
