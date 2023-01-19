@@ -17,6 +17,7 @@
     "test:integration:coverage": "yarn test:integration --coverage",
     "test:integration": "jest --config=jest.config.integration.js",
     "pretest:unit:coverage": "rm -frv tests/unit/coverage",
+    "test:unit:cover:report": "(rm -frv reports merged-coverage .nyc_output) && (mkdir -p reports) && (yarn test:unit:coverage) && (cp tests/unit/coverage/coverage-final.json reports/unit.json) && (nyc merge reports && mkdir -p .nyc_output && mv -fv coverage.json .nyc_output/out.json) && (yarn postcoverage)",
     "test:unit:coverage": "yarn test:unit --coverage",
     "test:unit": "jest --config=jest.config.unit.js"
   },
