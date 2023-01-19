@@ -7,3 +7,6 @@ nohup.out
 coverage
 e2e/.specs
 .nyc_output
+
+app/merged-coverage
+app/reports
